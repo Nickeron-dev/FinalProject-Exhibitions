@@ -1,13 +1,13 @@
-package ua.project.exhibition;
+package com.project.exhibitions;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ExhibitionApplication {
+public class ExhibitionsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ExhibitionApplication.class, args);
+        SpringApplication.run(ExhibitionsApplication.class, args);
     }
 
 }
