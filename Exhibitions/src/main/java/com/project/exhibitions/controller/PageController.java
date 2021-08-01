@@ -1,6 +1,7 @@
 package com.project.exhibitions.controller;
 
 import com.project.exhibitions.view.ILocaleNames;
+import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +19,9 @@ public class PageController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("register", view.getBundleText("title.button.register"));
-        model.addAttribute("login", view.getBundleText("title.button.login"));
-        return "welcome";
+        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_BUTTON));
+        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_BUTTON));
+        return "home";
     }
 
     @PostMapping(value="/change-language", params="ukr")
