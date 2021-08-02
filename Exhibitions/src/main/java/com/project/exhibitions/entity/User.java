@@ -1,6 +1,15 @@
 package com.project.exhibitions.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+//@Builder
+@ToString
 
 @Entity
 @Table(name = "users",
@@ -24,5 +33,5 @@ public class User {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private RoleType role;
-    
+
 }

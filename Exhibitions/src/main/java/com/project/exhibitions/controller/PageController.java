@@ -18,10 +18,15 @@ public class PageController {
     private View view = new View();
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String main(Model model) {
         model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_BUTTON));
         model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_BUTTON));
         return "home";
+    }
+
+    @GetMapping("/home")
+    public void home(Model model) {
+        main(model);
     }
 
     @PostMapping(value="/change-language", params="ukr")
