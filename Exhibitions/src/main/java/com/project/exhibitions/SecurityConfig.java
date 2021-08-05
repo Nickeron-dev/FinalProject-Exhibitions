@@ -1,6 +1,6 @@
 package com.project.exhibitions;
 
-import com.project.exhibitions.entity.RoleType;
+import com.project.exhibitions.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,7 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     public void globalConfig(AuthenticationManagerBuilder builder) throws Exception {
-        builder.inMemoryAuthentication().withUser("user").password("password").roles("USER");
+        builder.userDetailsService(userService);
     }
 }
