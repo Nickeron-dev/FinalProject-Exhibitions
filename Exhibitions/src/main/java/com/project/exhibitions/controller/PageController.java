@@ -15,7 +15,7 @@ import java.util.Optional;
 @Controller
 public class PageController {
 
-    private View view = new View();
+    private final View view = new View();
 
     @GetMapping("/")
     public String main(Model model) {

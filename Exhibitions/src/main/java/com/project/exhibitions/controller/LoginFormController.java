@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class LoginFormController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public LoginFormController(UserService userService) {
         this.userService = userService;
