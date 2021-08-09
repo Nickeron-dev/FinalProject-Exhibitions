@@ -3,12 +3,14 @@ package com.project.exhibitions.controller;
 import com.project.exhibitions.view.ILocaleNames;
 import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -39,6 +41,18 @@ public class PageController {
     public RedirectView eng() {
         view.changeLocale(Optional.of(new Locale(ILocaleNames.DEFAULT_LANGUAGE)));
         return new RedirectView("/");
+    }
+
+    @GetMapping("/registration")
+    public String registration() {
+        return "registration";
+    }
+
+    @PostMapping("/registration")
+    public String processRegistration(HttpServletRequest request) {
+        String email = request.getParameter("email");
+        System.out.println("EMAIL: " + email);
+        return "successfulRegistration";
     }
 
 }
