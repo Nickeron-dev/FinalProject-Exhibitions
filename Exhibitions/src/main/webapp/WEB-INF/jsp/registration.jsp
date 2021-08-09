@@ -10,8 +10,8 @@
 <body>
 <form:form action="/registration" method="post">
     <input type="text" name="email" placeholder="Email...">
-    <input type="text" placeholder="Username...">
-    <input type="text" placeholder="Password...">
+    <input type="text" name="username" placeholder="Username...">
+    <input type="text" name="password" placeholder="Password...">
     <input type="submit" value="Submit">
 </form:form>
 </body>

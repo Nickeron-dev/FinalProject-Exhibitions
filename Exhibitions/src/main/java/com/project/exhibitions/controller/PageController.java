@@ -1,8 +1,11 @@
 package com.project.exhibitions.controller;
 
+import com.project.exhibitions.entity.User;
+import com.project.exhibitions.services.UserService;
 import com.project.exhibitions.view.ILocaleNames;
 import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,9 @@ import java.util.Optional;
 
 @Controller
 public class PageController {
+
+    @Autowired
+    private UserService userService = new UserService();
 
     private final View view = new View();
 
@@ -49,9 +55,10 @@ public class PageController {
     }
 
     @PostMapping("/registration")
-    public String processRegistration(HttpServletRequest request) {
-        String email = request.getParameter("email");
-        System.out.println("EMAIL: " + email);
+    public String processRegistration(HttpServletRequest request) throws Exception {
+        User newUser = new User(request.getParameter("email"),
+                request.getParameter("username"), request.getParameter("password"));
+        userService.saveNewUser(newUser);
         return "successfulRegistration";
     }
 
