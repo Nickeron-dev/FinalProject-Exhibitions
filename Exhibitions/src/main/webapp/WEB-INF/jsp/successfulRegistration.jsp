@@ -6,7 +6,7 @@
 <head>
     <meta content="text/html">
     <title>Success</title>
-    <link href="../static/css/successfulRegistration.css" rel="stylesheet" type="text/css">
+    <link href="../css/successfulRegistration.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h1>${usedEmail}</h1>

@@ -6,7 +6,7 @@
 <head>
     <meta content="text/html">
     <title>Welcome</title>
-    <link href="../static/css/successfulRegistration.css" rel="stylesheet" type="text/css">
+    <link href="css\registration.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <form:form action="/registration" method="post">
