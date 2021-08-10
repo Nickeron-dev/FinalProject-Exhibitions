@@ -3,10 +3,13 @@ package com.project.exhibitions.services;
 import com.project.exhibitions.entity.User;
 import com.project.exhibitions.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -20,7 +23,7 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public void saveNewUser(User user) {
+    public void saveNewUser(User user) throws DataIntegrityViolationException {
         userRepository.save(user);
     }
 

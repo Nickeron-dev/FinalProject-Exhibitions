@@ -1,5 +1,6 @@
 package com.project.exhibitions.controller;
 
+import com.project.exhibitions.entity.Role;
 import com.project.exhibitions.entity.User;
 import com.project.exhibitions.services.UserService;
 import com.project.exhibitions.view.ILocaleNames;
@@ -54,12 +55,6 @@ public class PageController {
         return "registration";
     }
 
-    @PostMapping("/registration")
-    public String processRegistration(HttpServletRequest request) throws Exception {
-        User newUser = new User(request.getParameter("email"),
-                request.getParameter("username"), request.getParameter("password"));
-        userService.saveNewUser(newUser);
-        return "successfulRegistration";
-    }
+
 
 }

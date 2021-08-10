@@ -5,15 +5,10 @@
 <html>
 <head>
     <meta content="text/html">
-    <title>Welcome</title>
+    <title>Success</title>
     <link href="../static/css/successfulRegistration.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form:form action="/registration" method="post">
-    <input type="text" name="email" placeholder="Email...">
-    <input type="text" name="username" placeholder="Username...">
-    <input type="text" name="password" placeholder="Password...">
-    <input type="submit" value="Submit">
-</form:form>
+<h1>${usedEmail}</h1>
 </body>
 </html>
