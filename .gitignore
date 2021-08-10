@@ -8,8 +8,8 @@
 .idea/**/shelf
 
 # mvnw files
-*mvnw
-*mvnw.cmd
+Exhibitions/mvnw
+Exhibitions/mvnw.cmd
 
 # AWS User-specific
 .idea/**/aws.xml
