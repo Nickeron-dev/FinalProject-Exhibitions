@@ -1,6 +1,8 @@
 package com.project.exhibitions.services;
 
+import com.project.exhibitions.dto.UserDTO;
 import com.project.exhibitions.entity.Exhibition;
+import com.project.exhibitions.entity.Role;
 import com.project.exhibitions.entity.User;
 import com.project.exhibitions.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,17 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public void saveNewUser(User user) throws DataIntegrityViolationException {
-        userRepository.save(user);
+    public void saveNewUser(UserDTO user) throws DataIntegrityViolationException {
+        userRepository.save(User.builder()
+                .password(user.getPassword())
+                .role(Role.USER)
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .enabled(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .accountNonExpired(true)
+                .build());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.project.exhibitions.controller;
 
+import com.project.exhibitions.dto.UserDTO;
 import com.project.exhibitions.entity.Role;
 import com.project.exhibitions.entity.User;
 import com.project.exhibitions.services.UserService;
@@ -18,7 +19,7 @@ public class LoginFormController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public void loginUser(User user) throws UsernameNotFoundException {
+    public void loginUser(UserDTO user) throws UsernameNotFoundException {
         userService.loadUserByUsername(user.getUsername());
     }
 

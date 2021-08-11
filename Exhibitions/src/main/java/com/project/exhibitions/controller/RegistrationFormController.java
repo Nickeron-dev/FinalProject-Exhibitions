@@ -1,5 +1,6 @@
 package com.project.exhibitions.controller;
 
+import com.project.exhibitions.dto.UserDTO;
 import com.project.exhibitions.entity.User;
 import com.project.exhibitions.services.UserService;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class RegistrationFormController {
 
     @PostMapping("/registration")
     public ModelAndView processRegistration(HttpServletRequest request, Model model) {
-        User newUser = new User(request.getParameter("email"),
+        UserDTO newUser = new UserDTO(request.getParameter("email"),
                 request.getParameter("username"), request.getParameter("password"));
 
         try {
