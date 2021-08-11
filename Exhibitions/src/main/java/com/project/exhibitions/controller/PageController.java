@@ -1,8 +1,5 @@
 package com.project.exhibitions.controller;
 
-import com.project.exhibitions.entity.Role;
-import com.project.exhibitions.entity.User;
-import com.project.exhibitions.repository.ExhibitionRepository;
 import com.project.exhibitions.services.ExhibitionService;
 import com.project.exhibitions.services.UserService;
 import com.project.exhibitions.view.ILocaleNames;
@@ -10,14 +7,12 @@ import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -63,10 +58,9 @@ public class PageController {
         return "registration";
     }
 
-    @GetMapping("exhibitions")
-    public String exhibitionsList() {
-        exhibitionService.allExhibitions();
-        return "allExhibitions";
+    @GetMapping("/addExhibition")
+    public String addExhibition() {
+        return "addExhibition";
     }
 
 }
