@@ -6,14 +6,13 @@
 <head>
     <meta content="text/html">
     <title>Welcome</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/registration.css" type="text/css">
 </head>
 <body>
-<form:form action="/registration" method="post">
-    <input type="text" name="email" placeholder="Email...">
-    <input type="text" name="username" placeholder="Username...">
-    <input type="text" name="password" placeholder="Password...">
-    <input type="submit" value="Submit">
+<form:form action="/change-language" method="post">
+    <input type="submit" name="ukr" value="UKR">
+    <input type="submit" name="eng" value="ENG">
 </form:form>
+<button>${register}</button>
+<button>${login}</button>
 </body>
 </html>
