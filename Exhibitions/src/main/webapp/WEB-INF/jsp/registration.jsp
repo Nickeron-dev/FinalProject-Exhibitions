@@ -6,7 +6,7 @@
 <head>
     <meta content="text/html">
     <title>Welcome</title>
-    <link rel="stylesheet" href="registration.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/registration.css" type="text/css">
 </head>
 <body>
 <form:form action="/registration" method="post">
