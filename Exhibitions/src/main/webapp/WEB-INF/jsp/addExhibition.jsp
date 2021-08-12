@@ -6,7 +6,7 @@
 <head>
     <meta content="text/html">
     <title>Welcome</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/addExhibition.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/addexhibition.css" type="text/css">
 </head>
 <body>
 <form:form action="/addExhibition" method="post">
@@ -29,7 +29,7 @@
     <input type="time" name="endTime">
     <br>
     <label>Price</label>
-    <input type="text" name="price" placeholder="Price...">
+    <input type="text" name="price">
     <br>
     <input type="submit" value="Submit">
 </form:form>

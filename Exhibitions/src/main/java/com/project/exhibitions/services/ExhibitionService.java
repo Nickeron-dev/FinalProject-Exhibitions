@@ -17,4 +17,7 @@ public class ExhibitionService {
         return exhibitionRepository.findAll();
     }
 
+    public void saveNewExhibition(Exhibition exhibition) {
+        exhibitionRepository.save(exhibition);
+    }
 }

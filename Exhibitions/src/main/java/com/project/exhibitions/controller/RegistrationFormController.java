@@ -32,6 +32,6 @@ public class RegistrationFormController {
         } catch (DataIntegrityViolationException exc) {
             model.addAttribute("usedEmail", "Your email is already used! Use another one.");
         }
-        return new ModelAndView("successfulRegistration");
+        return new ModelAndView("registrationResult");
     }
 }

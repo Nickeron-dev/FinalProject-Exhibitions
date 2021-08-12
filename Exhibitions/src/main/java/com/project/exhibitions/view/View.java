@@ -1,5 +1,7 @@
 package com.project.exhibitions.view;
 
+import org.springframework.data.repository.NoRepositoryBean;
+
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -10,6 +12,10 @@ public class View {
 
     private ResourceBundle bundle =
             ResourceBundle.getBundle(BUNDLE_NAME, new Locale("en"));
+
+    public View() {
+
+    }
 
     public String getBundleText(String path) {
         return bundle.getString(path);
