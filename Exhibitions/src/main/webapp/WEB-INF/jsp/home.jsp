@@ -14,5 +14,31 @@
 </form:form>
 <button>${register}</button>
 <button>${login}</button>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Topic</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Rooms</th>
+        <th>Price</th>
+    </tr>
+    <c:forEach var="item" items="${listExhibitions}">
+        <tr>
+            <td><c:out value="${item.getId()}" /></td>
+            <td><c:out value="${item.getTopic()}" /></td>
+            <td><c:out value="${item.getStartDate()}" /></td>
+            <td><c:out value="${item.getEndDate()}" /></td>
+            <td><c:out value="${item.getStartTimeEveryDay()}" /></td>
+            <td><c:out value="${item.getEndTimeEveryDay()}" /></td>
+            <td><c:out value="${item.getRooms()}." /></td>
+            <td><c:out value="${item.getPrice()}" /></td>
+        </tr>
+    </c:forEach>
+</table>
+
 </body>
 </html>

@@ -33,6 +33,8 @@ public class PageController {
     public String main(Model model) {
         model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_BUTTON));
         model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_BUTTON));
+        model.addAttribute("listExhibitions", exhibitionService.allExhibitions());
+        System.out.println(exhibitionService.allExhibitions().get(0).getTopic());
         return "home";
     }
 

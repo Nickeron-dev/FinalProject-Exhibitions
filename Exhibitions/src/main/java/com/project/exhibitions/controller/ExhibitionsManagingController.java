@@ -7,6 +7,7 @@ import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,5 +43,12 @@ public class ExhibitionsManagingController {
             model.addAttribute("result", View.view.getBundleText(ITextsPaths.EXHIBITION_ADDING_ERROR));
         }
         return new ModelAndView("addExhibitionResult");
+    }
+
+    //@GetMapping("/")
+    public String allExhibitions(Model model) {
+        System.out.println(exhibitionService.allExhibitions());
+        model.addAttribute("listExhibitions", exhibitionService.allExhibitions());
+        return "home";
     }
 }
