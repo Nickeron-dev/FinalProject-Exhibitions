@@ -26,12 +26,12 @@ public class ExhibitionsManagingController {
     public ModelAndView addExhibition(HttpServletRequest request, Model model) {
         try {
             LocalDate.of(2232, 3, 23);
-
             exhibitionService.saveNewExhibition(Exhibition.builder()
                     .topic(request.getParameter("topic"))
-                    .startDate(LocalDate.of(Integer.parseInt(request.getParameter("startDate")), Integer.parseInt(request.getParameter("startDate")), Integer.parseInt(request.getParameter("startDate"))))
-                    .endDate(LocalDate.of(Integer.parseInt(request.getParameter("startDate")), Integer.parseInt(request.getParameter("startDate")), Integer.parseInt(request.getParameter("startDate"))))
-                    .startTimeEveryDay(LocalTime.of(Integer.parseInt(request.getParameter("startTimeEverDay")), Integer.parseInt(request.getParameter("endTimeEverDay"))))
+                    .startDate(LocalDate.of(Integer.parseInt(request.getParameter("startDate").substring(0, 4)), Integer.parseInt(request.getParameter("startDate").substring(5, 7)), Integer.parseInt(request.getParameter("startDate").substring(8))))
+                    .endDate(LocalDate.of(Integer.parseInt(request.getParameter("endDate").substring(0, 4)), Integer.parseInt(request.getParameter("endDate").substring(5, 7)), Integer.parseInt(request.getParameter("startDate").substring(8))))
+                    .startTimeEveryDay(LocalTime.of(Integer.parseInt(request.getParameter("startTime").substring(0, 2)), Integer.parseInt(request.getParameter("startTime").substring(3))))
+                    .endTimeEveryDay(LocalTime.of(Integer.parseInt(request.getParameter("endTime").substring(0, 2)), Integer.parseInt(request.getParameter("endTime").substring(3))))
                     .rooms(Integer.parseInt(request.getParameter("rooms")))
                     .price(Integer.parseInt(request.getParameter("price")))
                     .build());
