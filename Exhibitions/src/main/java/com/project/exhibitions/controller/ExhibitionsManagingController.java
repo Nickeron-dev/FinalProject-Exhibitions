@@ -1,7 +1,9 @@
 package com.project.exhibitions.controller;
 
+import com.project.exhibitions.containers.ISubstringIndexesForDatesAndTimes;
 import com.project.exhibitions.entity.Exhibition;
 import com.project.exhibitions.services.ExhibitionService;
+import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
 import org.springframework.ui.Model;
@@ -28,16 +30,16 @@ public class ExhibitionsManagingController {
             LocalDate.of(2232, 3, 23);
             exhibitionService.saveNewExhibition(Exhibition.builder()
                     .topic(request.getParameter("topic"))
-                    .startDate(LocalDate.of(Integer.parseInt(request.getParameter("startDate").substring(0, 4)), Integer.parseInt(request.getParameter("startDate").substring(5, 7)), Integer.parseInt(request.getParameter("startDate").substring(8))))
-                    .endDate(LocalDate.of(Integer.parseInt(request.getParameter("endDate").substring(0, 4)), Integer.parseInt(request.getParameter("endDate").substring(5, 7)), Integer.parseInt(request.getParameter("startDate").substring(8))))
-                    .startTimeEveryDay(LocalTime.of(Integer.parseInt(request.getParameter("startTime").substring(0, 2)), Integer.parseInt(request.getParameter("startTime").substring(3))))
-                    .endTimeEveryDay(LocalTime.of(Integer.parseInt(request.getParameter("endTime").substring(0, 2)), Integer.parseInt(request.getParameter("endTime").substring(3))))
+                    .startDate(LocalDate.of(Integer.parseInt(request.getParameter("startDate").substring(ISubstringIndexesForDatesAndTimes.YEAR_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.YEAR_END_INDEX)), Integer.parseInt(request.getParameter("startDate").substring(ISubstringIndexesForDatesAndTimes.MONTH_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.MONTH_END_INDEX)), Integer.parseInt(request.getParameter("startDate").substring(ISubstringIndexesForDatesAndTimes.DAY_BEGIN_INDEX))))
+                    .endDate(LocalDate.of(Integer.parseInt(request.getParameter("endDate").substring(ISubstringIndexesForDatesAndTimes.YEAR_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.YEAR_END_INDEX)), Integer.parseInt(request.getParameter("endDate").substring(ISubstringIndexesForDatesAndTimes.MONTH_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.MONTH_END_INDEX)), Integer.parseInt(request.getParameter("startDate").substring(ISubstringIndexesForDatesAndTimes.DAY_BEGIN_INDEX))))
+                    .startTimeEveryDay(LocalTime.of(Integer.parseInt(request.getParameter("startTime").substring(ISubstringIndexesForDatesAndTimes.HOUR_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.HOUR_END_INDEX)), Integer.parseInt(request.getParameter("startTime").substring(ISubstringIndexesForDatesAndTimes.MINUTE_BEGIN_INDEX))))
+                    .endTimeEveryDay(LocalTime.of(Integer.parseInt(request.getParameter("endTime").substring(ISubstringIndexesForDatesAndTimes.HOUR_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.HOUR_END_INDEX)), Integer.parseInt(request.getParameter("endTime").substring(ISubstringIndexesForDatesAndTimes.MINUTE_BEGIN_INDEX))))
                     .rooms(Integer.parseInt(request.getParameter("rooms")))
                     .price(Integer.parseInt(request.getParameter("price")))
                     .build());
-            model.addAttribute("result", View.view.getBundleText("addition.exhibition.success"));
+            model.addAttribute("result", View.view.getBundleText(ITextsPaths.EXHIBITION_ADDING_SUCCESS));
         } catch (Exception exc) {
-            model.addAttribute("result", View.view.getBundleText("addition.exhibition.error"));
+            model.addAttribute("result", View.view.getBundleText(ITextsPaths.EXHIBITION_ADDING_ERROR));
         }
         return new ModelAndView("addExhibitionResult");
     }
