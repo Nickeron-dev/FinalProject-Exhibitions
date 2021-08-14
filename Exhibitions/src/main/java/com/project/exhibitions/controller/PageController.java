@@ -1,5 +1,6 @@
 package com.project.exhibitions.controller;
 
+import com.project.exhibitions.entity.Role;
 import com.project.exhibitions.services.ExhibitionService;
 import com.project.exhibitions.services.UserService;
 import com.project.exhibitions.view.ILocaleNames;
@@ -7,6 +8,8 @@ import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,17 +33,22 @@ public class PageController {
     private final View view = new View();
 
     @GetMapping("/")
-    public String main(Model model) {
+    public String main(Model model, Authentication authentication) {
         model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_BUTTON));
         model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_BUTTON));
         model.addAttribute("listExhibitions", exhibitionService.allExhibitions());
-        System.out.println(exhibitionService.allExhibitions().get(0).getTopic());
+        try {
+            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
+        } catch(NullPointerException exc) {
+
+        }
+
         return "home";
     }
 
     @GetMapping("/home")
-    public void home(Model model) {
-        main(model);
+    public void home(Model model, Authentication authentication) {
+        main(model, authentication);
     }
 
     @PostMapping(value="/change-language", params="ukr")

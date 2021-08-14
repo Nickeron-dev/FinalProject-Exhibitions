@@ -7,6 +7,7 @@
 <head>
     <meta content="text/html">
     <title>Welcome</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css" type="text/css">
 </head>
 <body>
 <form:form action="/change-language" method="post">
@@ -26,6 +27,10 @@
         <th>End Time</th>
         <th>Rooms</th>
         <th>Price</th>
+        <c:if test="${isAdmin == true}">
+            <th>Cancel</th>
+        </c:if>
+
     </tr>
     <c:forEach var="item" items="${listExhibitions}">
         <tr>
@@ -37,6 +42,9 @@
             <td>${item.endTimeEveryDay}</td>
             <td>${item.rooms}</td>
             <td>${item.price}</td>
+            <c:if test="${isAdmin == true}">
+                <td><button class="cancel">Cancel</button></td>
+            </c:if>
         </tr>
     </c:forEach>
 </table>
