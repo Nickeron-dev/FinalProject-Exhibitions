@@ -5,3 +5,7 @@ body {
 .cancel {
     background: red;
 }
+
+.buy {
+    background: green;
+}

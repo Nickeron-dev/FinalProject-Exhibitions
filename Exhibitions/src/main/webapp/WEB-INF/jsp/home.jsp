@@ -27,6 +27,7 @@
         <th>End Time</th>
         <th>Rooms</th>
         <th>Price</th>
+        <th>Buy a ticket</th>
         <c:if test="${isAdmin == true}">
             <th>Cancel</th>
         </c:if>
@@ -42,6 +43,7 @@
             <td>${item.endTimeEveryDay}</td>
             <td>${item.rooms}</td>
             <td>${item.price}</td>
+            <td><button class="buy">Buy</button></td>
             <c:if test="${isAdmin == true}">
                 <td><button class="cancel">Cancel</button></td>
             </c:if>
