@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
@@ -15,7 +16,7 @@
 <button>${register}</button>
 <button>${login}</button>
 
-<table>
+<table border="2">
     <tr>
         <th>ID</th>
         <th>Topic</th>
@@ -28,14 +29,14 @@
     </tr>
     <c:forEach var="item" items="${listExhibitions}">
         <tr>
-            <td><c:out value="${item.getId()}" /></td>
-            <td><c:out value="${item.getTopic()}" /></td>
-            <td><c:out value="${item.getStartDate()}" /></td>
-            <td><c:out value="${item.getEndDate()}" /></td>
-            <td><c:out value="${item.getStartTimeEveryDay()}" /></td>
-            <td><c:out value="${item.getEndTimeEveryDay()}" /></td>
-            <td><c:out value="${item.getRooms()}." /></td>
-            <td><c:out value="${item.getPrice()}" /></td>
+            <td>${item.id}</td>
+            <td>${item.topic}</td>
+            <td>${item.startDate}</td>
+            <td>${item.endDate}</td>
+            <td>${item.startTimeEveryDay}</td>
+            <td>${item.endTimeEveryDay}</td>
+            <td>${item.rooms}</td>
+            <td>${item.price}</td>
         </tr>
     </c:forEach>
 </table>
