@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Locale;
@@ -46,6 +47,17 @@ public class PageController {
         return "home";
     }
 
+    @PostMapping(value = "/")
+    public String buyTicket(@RequestParam String id) {
+        System.out.println(Integer.parseInt(id));
+        try {
+            System.out.println(Integer.parseInt(id));
+        } catch (Exception exc) {
+            System.out.println("Err");
+        }
+        return "hello";
+    }
+    // TODO add @postmapping method and to check add just sout(it must output id of pressed button 'buy'
     @GetMapping("/home")
     public void home(Model model, Authentication authentication) {
         main(model, authentication);

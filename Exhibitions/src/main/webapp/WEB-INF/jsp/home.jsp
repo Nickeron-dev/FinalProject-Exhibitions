@@ -43,7 +43,9 @@
             <td>${item.endTimeEveryDay}</td>
             <td>${item.rooms}</td>
             <td>${item.price}</td>
-            <td><button class="buy">Buy</button></td>
+            <td><form:form action="/buy" method="post">
+                <input class="buy" type="submit" name="${item.id}" value="Buy">
+            </form:form></td>
             <c:if test="${isAdmin == true}">
                 <td><button class="cancel">Cancel</button></td>
             </c:if>
