@@ -47,11 +47,12 @@ public class PageController {
         return "home";
     }
 
-    @PostMapping(value = "/")
-    public String buyTicket(@RequestParam String id) {
-        System.out.println(Integer.parseInt(id));
+    @PostMapping(value = "/buy")
+    public String buyTicket(@RequestParam Integer id) {
+        //System.out.println(Integer.parseInt(id));
+        System.out.println(id);
         try {
-            System.out.println(Integer.parseInt(id));
+            //System.out.println(Integer.parseInt(id));
         } catch (Exception exc) {
             System.out.println("Err");
         }
