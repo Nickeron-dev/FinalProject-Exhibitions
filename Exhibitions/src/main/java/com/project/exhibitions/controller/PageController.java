@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -48,17 +50,11 @@ public class PageController {
     }
 
     @PostMapping(value = "/buy")
-    public String buyTicket(@RequestParam Integer id) {
-        //System.out.println(Integer.parseInt(id));
-        System.out.println(id);
-        try {
-            //System.out.println(Integer.parseInt(id));
-        } catch (Exception exc) {
-            System.out.println("Err");
-        }
-        return "hello";
+    public String buyTicket(HttpServletRequest request) {
+        System.out.println(request.getParameterNames().nextElement());
+        return "buyTicket";
     }
-    // TODO add @postmapping method and to check add just sout(it must output id of pressed button 'buy'
+
     @GetMapping("/home")
     public void home(Model model, Authentication authentication) {
         main(model, authentication);
