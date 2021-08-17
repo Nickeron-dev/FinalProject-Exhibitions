@@ -13,8 +13,6 @@ import java.util.Collection;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 
 @Entity
 @Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
