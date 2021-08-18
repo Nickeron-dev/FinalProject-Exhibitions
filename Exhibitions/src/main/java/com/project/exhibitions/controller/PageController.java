@@ -1,7 +1,10 @@
 package com.project.exhibitions.controller;
 
+import com.project.exhibitions.dto.TicketDTO;
 import com.project.exhibitions.entity.Role;
+import com.project.exhibitions.entity.Ticket;
 import com.project.exhibitions.services.ExhibitionService;
+import com.project.exhibitions.services.TicketService;
 import com.project.exhibitions.services.UserService;
 import com.project.exhibitions.view.ILocaleNames;
 import com.project.exhibitions.view.ITextsPaths;
@@ -33,6 +36,9 @@ public class PageController {
     @Autowired
     private ExhibitionService exhibitionService;
 
+    @Autowired
+    private TicketService ticketService;
+
     private final View view = new View();
 
     @GetMapping("/")
@@ -50,9 +56,19 @@ public class PageController {
     }
 
     @PostMapping(value = "/buy")
-    public String buyTicket(HttpServletRequest request) {
-        System.out.println(request.getParameterNames().nextElement());
-        return "buyTicket";
+    public String buyTicket(HttpServletRequest request, Model model) {
+
+        System.out.println(request.getParameterNames().nextElement() + " " + request.getUserPrincipal().toString().split("=|\\,")[2]);
+        TicketDTO ticket = new TicketDTO(Integer.parseInt(request.getUserPrincipal().toString().split("=|\\,")[2]), Integer.parseInt(request.getParameterNames().nextElement()));
+        try {
+            ticketService.saveNewTicket(ticket);
+            model.addAttribute("isSuccessful", "successful!");
+        } catch(Exception exc) {
+            System.out.println("Err");
+            exc.printStackTrace();
+            model.addAttribute("isSuccessful", "Error!");
+        }
+        return "buyTicketResult";
     }
 
     @GetMapping("/home")

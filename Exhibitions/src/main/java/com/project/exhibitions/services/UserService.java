@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -40,4 +41,7 @@ public class UserService implements UserDetailsService {
                 .build());
     }
 
+    public Optional<User> findById(Integer userId) {
+        return userRepository.findById(userId);
+    }
 }
