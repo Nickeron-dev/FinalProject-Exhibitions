@@ -45,11 +45,4 @@ public class ExhibitionsManagingController {
         }
         return new ModelAndView("addExhibitionResult");
     }
-
-    //@GetMapping("/")
-    public String allExhibitions(Model model) {
-        System.out.println(exhibitionService.allExhibitions());
-        model.addAttribute("listExhibitions", exhibitionService.allExhibitions());
-        return "home";
-    }
 }

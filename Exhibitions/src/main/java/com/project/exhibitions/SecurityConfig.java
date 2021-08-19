@@ -20,8 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
-                .antMatchers("/manageExhibitions", "/addExhibition", "/buy").access("hasAuthority('ADMIN')")
-                .antMatchers("/buy").access("hasAuthority('USER')")
+                .antMatchers("/manageExhibitions", "/addExhibition").access("hasAuthority('ADMIN')")
+                .antMatchers("/buy").access("hasAnyAuthority('USER', 'ADMIN')")
                 .and()
                 .formLogin().permitAll()
                 .and()
@@ -36,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         builder.userDetailsService(userService);
     }
 
-    // from here
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();

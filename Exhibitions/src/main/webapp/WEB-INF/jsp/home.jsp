@@ -20,17 +20,20 @@
 <table border="2">
     <tr>
         <th>ID</th>
-        <th>Topic</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Rooms</th>
-        <th>Price</th>
-        <th>State</th>
-        <th>Buy a ticket</th>
+        <th>${topic}</th>
+        <th>${startDate}</th>
+        <th>${endDate}</th>
+        <th>${startTime}</th>
+        <th>${endTime}</th>
+        <th>${rooms}</th>
+        <th>${price}</th>
+        <th>${state}</th>
+        <th>${buyTicket}</th>
         <c:if test="${isAdmin == true}">
-            <th>Cancel</th>
+            <th>${cancel}</th>
+        </c:if>
+        <c:if test="${isAdmin == true}">
+            <th>${plan}</th>
         </c:if>
 
     </tr>
@@ -49,7 +52,14 @@
                 <input class="buy" type="submit" name="${item.id}" value="Buy">
             </form:form></td>
             <c:if test="${isAdmin == true}">
-                <td><button class="cancel">Cancel</button></td>
+                <td><form:form action="/cancel" method="post">
+                    <input class="cancel" type="submit" name="${item.id}" value="Cancel">
+                    </form:form></td>
+            </c:if>
+            <c:if test="${isAdmin == true}">
+                <td><form:form action="/plan" method="post">
+                    <input class="plan" type="submit" name="${item.id}" value="Plan">
+                </form:form></td>
             </c:if>
         </tr>
     </c:forEach>
