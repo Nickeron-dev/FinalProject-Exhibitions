@@ -2,6 +2,7 @@ package com.project.exhibitions.controller;
 
 import com.project.exhibitions.containers.ISubstringIndexesForDatesAndTimes;
 import com.project.exhibitions.entity.Exhibition;
+import com.project.exhibitions.entity.ExhibitionState;
 import com.project.exhibitions.services.ExhibitionService;
 import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
@@ -28,7 +29,6 @@ public class ExhibitionsManagingController {
     @PostMapping("/addExhibition")
     public ModelAndView addExhibition(HttpServletRequest request, Model model) {
         try {
-            LocalDate.of(2232, 3, 23);
             exhibitionService.saveNewExhibition(Exhibition.builder()
                     .topic(request.getParameter("topic"))
                     .startDate(LocalDate.of(Integer.parseInt(request.getParameter("startDate").substring(ISubstringIndexesForDatesAndTimes.YEAR_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.YEAR_END_INDEX)), Integer.parseInt(request.getParameter("startDate").substring(ISubstringIndexesForDatesAndTimes.MONTH_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.MONTH_END_INDEX)), Integer.parseInt(request.getParameter("startDate").substring(ISubstringIndexesForDatesAndTimes.DAY_BEGIN_INDEX))))
@@ -37,6 +37,7 @@ public class ExhibitionsManagingController {
                     .endTimeEveryDay(LocalTime.of(Integer.parseInt(request.getParameter("endTime").substring(ISubstringIndexesForDatesAndTimes.HOUR_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.HOUR_END_INDEX)), Integer.parseInt(request.getParameter("endTime").substring(ISubstringIndexesForDatesAndTimes.MINUTE_BEGIN_INDEX))))
                     .rooms(Integer.parseInt(request.getParameter("rooms")))
                     .price(Integer.parseInt(request.getParameter("price")))
+                    .state(ExhibitionState.PLANNED)
                     .build());
             model.addAttribute("result", View.view.getBundleText(ITextsPaths.EXHIBITION_ADDING_SUCCESS));
         } catch (Exception exc) {

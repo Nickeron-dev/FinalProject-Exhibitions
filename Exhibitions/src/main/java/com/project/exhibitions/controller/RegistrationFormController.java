@@ -1,7 +1,6 @@
 package com.project.exhibitions.controller;
 
 import com.project.exhibitions.dto.UserDTO;
-import com.project.exhibitions.entity.User;
 import com.project.exhibitions.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RegistrationFormController {
 
     private final UserService userService;
-    
+
     @PostMapping("/registration")
     public ModelAndView processRegistration(HttpServletRequest request, Model model) {
         UserDTO newUser = new UserDTO(request.getParameter("email"),

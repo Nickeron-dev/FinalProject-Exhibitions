@@ -41,4 +41,8 @@ public class Exhibition {
     @Column(name = "price", nullable = false)
     private Integer price;
 
+    @Column(name = "state", nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private ExhibitionState state;
+
 }

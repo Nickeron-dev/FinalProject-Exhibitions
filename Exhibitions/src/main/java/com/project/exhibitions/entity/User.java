@@ -18,7 +18,7 @@ import java.util.Collection;
 @Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @Column(name = "id", nullable = false)
     private Integer id;
 

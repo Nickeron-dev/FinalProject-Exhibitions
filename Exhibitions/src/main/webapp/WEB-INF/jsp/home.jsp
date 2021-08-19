@@ -27,6 +27,7 @@
         <th>End Time</th>
         <th>Rooms</th>
         <th>Price</th>
+        <th>State</th>
         <th>Buy a ticket</th>
         <c:if test="${isAdmin == true}">
             <th>Cancel</th>
@@ -43,6 +44,7 @@
             <td>${item.endTimeEveryDay}</td>
             <td>${item.rooms}</td>
             <td>${item.price}</td>
+            <td>${item.state}</td>
             <td><form:form action="/buy" method="post">
                 <input class="buy" type="submit" name="${item.id}" value="Buy">
             </form:form></td>
