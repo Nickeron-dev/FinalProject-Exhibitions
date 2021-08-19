@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RegistrationFormController {
 
     private final UserService userService;
-
+    
     @PostMapping("/registration")
     public ModelAndView processRegistration(HttpServletRequest request, Model model) {
         UserDTO newUser = new UserDTO(request.getParameter("email"),

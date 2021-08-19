@@ -57,15 +57,18 @@ public class PageController {
 
     @PostMapping(value = "/buy")
     public String buyTicket(HttpServletRequest request, Model model) {
-
-        System.out.println(request.getParameterNames().nextElement() + " " + request.getUserPrincipal().toString().split("=|\\,")[2]);
-        TicketDTO ticket = new TicketDTO(Integer.parseInt(request.getUserPrincipal().toString().split("=|\\,")[2]), Integer.parseInt(request.getParameterNames().nextElement()));
         try {
-            ticketService.saveNewTicket(ticket);
+            TicketDTO ticket = new TicketDTO(Integer
+                    .parseInt(request.getUserPrincipal().toString().split("=|\\,")[2]),
+                    Integer.parseInt(request.getParameterNames().nextElement()));
+            ticketService.saveNewTicket(Ticket.builder()
+                    .userEmail(userService.findById(ticket.getUserId()).get().getEmail())
+                    .userId(ticket.getUserId())
+                    .exhibitionTopic(exhibitionService.findById(ticket.getExhibitionId()).get().getTopic())
+                    .exhibitionId(ticket.getExhibitionId())
+                    .build());
             model.addAttribute("isSuccessful", "successful!");
         } catch(Exception exc) {
-            System.out.println("Err");
-            exc.printStackTrace();
             model.addAttribute("isSuccessful", "Error!");
         }
         return "buyTicketResult";
