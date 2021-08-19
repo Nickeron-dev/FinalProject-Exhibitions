@@ -10,12 +10,15 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css" type="text/css">
 </head>
 <body>
-<form:form action="/change-language" method="post">
-    <input type="submit" name="ukr" value="UKR">
-    <input type="submit" name="eng" value="ENG">
-</form:form>
-<button>${register}</button>
-<button>${login}</button>
+<header>
+    <form:form action="/change-language" method="post">
+        <input type="submit" name="ukr" value="UKR">
+        <input type="submit" name="eng" value="ENG">
+    </form:form>
+    <a href="/registration">${register}</a>
+    <a href="/login">${login}</a>
+</header>
+
 
 <table border="2">
     <tr>
