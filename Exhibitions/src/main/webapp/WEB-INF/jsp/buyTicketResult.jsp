@@ -7,7 +7,7 @@
 <head>
     <meta content="text/html">
     <title>Welcome</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/statistics.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css" type="text/css">
 </head>
 <body>
 <header>
@@ -24,32 +24,13 @@
         <a href="/login">${login}</a>
     </c:if>
     <c:if test="${isAdmin == true}">
+        <a href="/statistics">${statistics}</a>
         <a href="/addExhibition">${addExhibition}</a>
     </c:if>
 </header>
 
+<p>${isSuccessful}</p>
 
-<table border="2">
-    <tr>
-        <th>ID</th>
-        <th>${topic}</th>
-        <th>${startDate}</th>
-        <th>${endDate}</th>
-        <th>${price}</th>
-        <th>${state}</th>
-        <th>${visitors}</th>
-    </tr>
-    <c:forEach var="item" items="${statistics}">
-        <tr>
-            <td>${item.id}</td>
-            <td>${item.topic}</td>
-            <td>${item.startDate}</td>
-            <td>${item.endDate}</td>
-            <td>${item.price}</td>
-            <td>${item.state}</td>
-            <td>${item.visitors}</td>
-        </tr>
-    </c:forEach>
 </table>
 
 </body>

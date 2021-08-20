@@ -1,23 +1,49 @@
 package com.project.exhibitions.view;
 
 public interface ITextsPaths {
-    String REGISTER_BUTTON = "home.title.button.register";
-    String LOGIN_BUTTON = "home.title.button.login";
+    String HOME = "title.href.home";
+    String REGISTER_HREF = "title.href.register";
+    String LOGIN_HREF = "title.href.login";
+    String LOGOUT_HREF = "title.href.logout";
+    String STATISTICS_HREF = "title.href.statistics";
+    String ADD_EXHIBITION_HREF = "title.href.add.exhibition";
 
-    String TOPIC = "home.table.topic";
-    String START_DATE = "home.table.start.date";
-    String END_DATE = "home.table.end.date";
-    String START_TIME = "home.table.start.time";
-    String END_TIME = "home.table.end.time";
-    String ROOMS = "home.table.rooms";
-    String PRICE = "home.table.price";
-    String STATE = "home.table.state";
-    String BUY_A_TICKET = "home.table.buy.ticket";
-    String CANCEL = "home.table.cancel";
-    String PLAN = "home.table.plan";
+    String TOPIC = "table.topic";
+    String START_DATE = "table.start.date";
+    String END_DATE = "table.end.date";
+    String START_TIME = "table.start.time";
+    String END_TIME = "table.end.time";
+    String ROOMS = "table.rooms";
+    String PRICE = "table.price";
+    String STATE = "table.state";
+    String BUY_A_TICKET = "table.buy.ticket";
+    String BUY = "table.buy";
+    String CANCEL = "table.cancel";
+    String PLAN = "table.plan";
+
+    String FILTER_BY_DATE = "filtering.filter.by.date";
+
+    String SUBMIT = "form.submit";
+    String EMAIL = "form.email";
+    String USERNAME = "form.username";
+    String PASSWORD = "form.password";
+
+    String EXHIBITION_ADDING_TOPIC = "add.exhibition.form.topic";
+    String EXHIBITION_ADDING_START_DATE = "add.exhibition.form.start.date";
+    String EXHIBITION_ADDING_END_DATE = "add.exhibition.form.end.date";
+    String EXHIBITION_ADDING_ROOMS_NUMBER = "add.exhibition.form.rooms.number";
+    String EXHIBITION_ADDING_START_TIME = "add.exhibition.form.start.time";
+    String EXHIBITION_ADDING_END_TIME = "add.exhibition.form.end.time";
+    String EXHIBITION_ADDING_PRICE = "add.exhibition.form.price";
 
     String VISITORS = "statistics.table.visitors";
 
     String EXHIBITION_ADDING_SUCCESS = "addition.exhibition.success";
     String EXHIBITION_ADDING_ERROR = "addition.exhibition.error";
+
+    String CANCEL_EXHIBITION = "cancel.exhibition";
+    String PLAN_EXHIBITION = "plan.exhibition";
+
+    String BUY_TICKET_SUCCESS = "buy.ticket.success";
+    String BUY_TICKET_ERROR = "buy.ticket.error";
 }

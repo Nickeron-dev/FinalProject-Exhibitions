@@ -24,13 +24,8 @@ header input {
     float: right;
 }
 
-form {
+h1 {
     margin-top: 0.5em;
-}
-
-.add-exhibition input {
-    font-size: 1em;
-    margin-bottom: 10px;
 }
 
 .cancel {

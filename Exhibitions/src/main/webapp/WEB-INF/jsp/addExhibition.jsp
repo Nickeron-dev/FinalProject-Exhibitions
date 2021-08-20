@@ -9,29 +9,46 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/addexhibition.css" type="text/css">
 </head>
 <body>
-<form:form action="/addExhibition" method="post">
-    <label>Topic:</label>
+<header>
+    <form:form action="/change-language" method="post">
+        <input type="submit" name="ukr" value="UKR">
+        <input type="submit" name="eng" value="ENG">
+    </form:form>
+    <a href="/home">${home}</a>
+    <a href="/registration">${register}</a>
+    <c:if test="${isAuthorized == true}">
+        <a href="/logout">${logout}</a>
+    </c:if>
+    <c:if test="${isAuthorized == false}">
+        <a href="/login">${login}</a>
+    </c:if>
+    <c:if test="${isAdmin == true}">
+        <a href="/statistics">${statistics}</a>
+    </c:if>
+</header>
+<form:form class="add-exhibition" action="/addExhibition" method="post">
+    <label>${inputTopic}</label>
     <input type="text" name="topic">
     <br>
-    <label>Start date:</label>
+    <label>${inputStartDate}</label>
     <input type="date" name="startDate">
     <br>
-    <label>End date:</label>
+    <label>${inputEndDate}</label>
     <input type="date" name="endDate">
     <br>
-    <label>Rooms number:</label>
+    <label>${inputRoomsNumber}</label>
     <input type="text" name="rooms">
     <br>
-    <label>Opens at:</label>
+    <label>${inputStartTime}</label>
     <input type="time" name="startTime">
     <br>
-    <label>Closes at:</label>
+    <label>${inputEndTime}</label>
     <input type="time" name="endTime">
     <br>
-    <label>Price</label>
+    <label>${inputPrice}</label>
     <input type="text" name="price">
     <br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="${submit}">
 </form:form>
 </body>
 </html>

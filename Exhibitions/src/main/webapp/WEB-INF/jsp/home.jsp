@@ -15,14 +15,24 @@
         <input type="submit" name="ukr" value="UKR">
         <input type="submit" name="eng" value="ENG">
     </form:form>
+    <a href="/home">${home}</a>
     <a href="/registration">${register}</a>
-    <a href="/login">${login}</a>
+    <c:if test="${isAuthorized == true}">
+        <a href="/logout">${logout}</a>
+    </c:if>
+    <c:if test="${isAuthorized == false}">
+        <a href="/login">${login}</a>
+    </c:if>
+    <c:if test="${isAdmin == true}">
+        <a href="/statistics">${statistics}</a>
+        <a href="/addExhibition">${addExhibition}</a>
+    </c:if>
 </header>
 
 <form:form action="/" method="post">
-    <label>Filter by date</label>
+    <label>${filterByDate}</label>
     <input type="date" name="filterDate">
-    <input type="submit" name="filterSubmit" value="Submit">
+    <input type="submit" name="filterSubmit" value="${submit}">
 </form:form>
 <p>${notGivenFilter}</p>
 
@@ -58,16 +68,16 @@
             <td>${item.price}</td>
             <td>${item.state}</td>
             <td><form:form action="/buy" method="post">
-                <input class="buy" type="submit" name="${item.id}" value="Buy">
+                <input class="buy" type="submit" name="${item.id}" value="${buy}">
             </form:form></td>
             <c:if test="${isAdmin == true}">
                 <td><form:form action="/cancel" method="post">
-                    <input class="cancel" type="submit" name="${item.id}" value="Cancel">
+                    <input class="cancel" type="submit" name="${item.id}" value="${cancel}">
                     </form:form></td>
             </c:if>
             <c:if test="${isAdmin == true}">
                 <td><form:form action="/plan" method="post">
-                    <input class="plan" type="submit" name="${item.id}" value="Plan">
+                    <input class="plan" type="submit" name="${item.id}" value="${plan}">
                 </form:form></td>
             </c:if>
         </tr>
