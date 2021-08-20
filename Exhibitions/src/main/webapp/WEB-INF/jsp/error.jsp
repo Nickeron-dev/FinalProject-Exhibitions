@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
@@ -6,7 +7,7 @@
 <head>
     <meta content="text/html">
     <title>Welcome</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/addexhibition.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css" type="text/css">
 </head>
 <body>
 <header>
@@ -19,33 +20,18 @@
     <c:if test="${isAuthorized == true}">
         <a href="/logout">${logout}</a>
     </c:if>
+    <c:if test="${isAuthorized == false}">
+        <a href="/login">${login}</a>
+    </c:if>
     <c:if test="${isAdmin == true}">
         <a href="/statistics">${statistics}</a>
+        <a href="/addExhibition">${addExhibition}</a>
     </c:if>
 </header>
-<form:form class="add-exhibition" action="/addExhibition" method="post">
-    <label>${inputTopic}</label>
-    <input type="text" name="topic">
-    <br>
-    <label>${inputStartDate}</label>
-    <input type="date" name="startDate">
-    <br>
-    <label>${inputEndDate}</label>
-    <input type="date" name="endDate">
-    <br>
-    <label>${inputRoomsNumber}</label>
-    <input type="text" name="rooms">
-    <br>
-    <label>${inputStartTime}</label>
-    <input type="time" name="startTime">
-    <br>
-    <label>${inputEndTime}</label>
-    <input type="time" name="endTime">
-    <br>
-    <label>${inputPrice}</label>
-    <input type="text" name="price">
-    <br>
-    <input type="submit" value="${submit}">
-</form:form>
+
+<h1>${errorPage}</h1>
+
+</table>
+
 </body>
 </html>

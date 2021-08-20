@@ -2,8 +2,6 @@ package com.project.exhibitions.controller;
 
 import com.project.exhibitions.containers.ISubstringIndexesForDatesAndTimes;
 import com.project.exhibitions.dto.TicketDTO;
-import com.project.exhibitions.entity.Exhibition;
-import com.project.exhibitions.entity.Role;
 import com.project.exhibitions.entity.Ticket;
 import com.project.exhibitions.services.ExhibitionService;
 import com.project.exhibitions.services.TicketService;
@@ -22,7 +20,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,82 +30,43 @@ import java.util.stream.Collectors;
 public class PageController {
 
     @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
-    private ExhibitionService exhibitionService;
+    private final ExhibitionService exhibitionService;
 
     @Autowired
-    private TicketService ticketService;
+    private final TicketService ticketService;
 
     private final View view = new View();
+    private final Configurator configurator = new Configurator();
 
     @GetMapping("/")
     public String main(Model model, Authentication authentication) {
-        model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
-        model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
-        model.addAttribute("addExhibition", view.getBundleText(ITextsPaths.ADD_EXHIBITION_HREF));
-        model.addAttribute("statistics", view.getBundleText(ITextsPaths.STATISTICS_HREF));
-        try {
-            model.addAttribute("isAuthorized", authentication.isAuthenticated());
-        } catch(NullPointerException exc) {
-            model.addAttribute("isAuthorized", false);
-        }
+        configurator.basicConfiguration(model, authentication, view);
         model.addAttribute("filterByDate", view.getBundleText(ITextsPaths.FILTER_BY_DATE));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
         model.addAttribute("listExhibitions", exhibitionService.allExhibitions());
-        try {
-            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
-        } catch(NullPointerException exc) {
 
-        }
-        model.addAttribute("topic", view.getBundleText(ITextsPaths.TOPIC));
-        model.addAttribute("startDate", view.getBundleText(ITextsPaths.START_DATE));
-        model.addAttribute("endDate", view.getBundleText(ITextsPaths.END_DATE));
-        model.addAttribute("startTime", view.getBundleText(ITextsPaths.START_TIME));
-        model.addAttribute("endTime", view.getBundleText(ITextsPaths.END_TIME));
-        model.addAttribute("price", view.getBundleText(ITextsPaths.PRICE));
-        model.addAttribute("rooms", view.getBundleText(ITextsPaths.ROOMS));
-        model.addAttribute("state", view.getBundleText(ITextsPaths.STATE));
-        model.addAttribute("buyTicket", view.getBundleText(ITextsPaths.BUY_A_TICKET));
-        model.addAttribute("buy", view.getBundleText(ITextsPaths.BUY));
-        model.addAttribute("cancel", view.getBundleText(ITextsPaths.CANCEL));
-        model.addAttribute("plan", view.getBundleText(ITextsPaths.PLAN));
+        configurator.configureExhibitionTable(model, view);
         return "home";
     }
 
     @PostMapping(value = "/buy")
     public String buyTicket(HttpServletRequest request, Model model, Authentication authentication) {
-        model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
-        model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
-        try {
-            model.addAttribute("isAuthorized", authentication.isAuthenticated());
-        } catch(NullPointerException exc) {
-            model.addAttribute("isAuthorized", false);
-        }
-        model.addAttribute("addExhibition", view.getBundleText(ITextsPaths.ADD_EXHIBITION_HREF));
-        model.addAttribute("statistics", view.getBundleText(ITextsPaths.STATISTICS_HREF));
-        try {
-            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
-        } catch(NullPointerException exc) {
-
-        }
+        configurator.basicConfiguration(model, authentication, view);
         try {
             TicketDTO ticket = new TicketDTO(Integer
                     .parseInt(request.getUserPrincipal().toString().split("=|\\,")[2]),
                     Integer.parseInt(request.getParameterNames().nextElement()));
             ticketService.saveNewTicket(Ticket.builder()
-                    .userEmail(userService.findById(ticket.getUserId()).get().getEmail())
+                    .userEmail(userService.findById(ticket.getUserId()).orElseThrow(IllegalArgumentException::new).getEmail())
                     .userId(ticket.getUserId())
-                    .exhibitionTopic(exhibitionService.findById(ticket.getExhibitionId()).get().getTopic())
+                    .exhibitionTopic(exhibitionService.findById(ticket.getExhibitionId()).orElseThrow(IllegalArgumentException::new).getTopic())
                     .exhibitionId(ticket.getExhibitionId())
                     .build());
             model.addAttribute("isSuccessful", view.getBundleText(ITextsPaths.BUY_TICKET_SUCCESS));
-        } catch(Exception exc) {
+        } catch(IllegalArgumentException exc) {
             model.addAttribute("isSuccessful", view.getBundleText(ITextsPaths.BUY_TICKET_ERROR));
         }
         return "buyTicketResult";
@@ -116,22 +74,7 @@ public class PageController {
 
     @PostMapping("/cancel")
     public String cancelExhibition(HttpServletRequest request, Model model, Authentication authentication) {
-        model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
-        model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
-        try {
-            model.addAttribute("isAuthorized", authentication.isAuthenticated());
-        } catch(NullPointerException exc) {
-            model.addAttribute("isAuthorized", false);
-        }
-        model.addAttribute("addExhibition", view.getBundleText(ITextsPaths.ADD_EXHIBITION_HREF));
-        model.addAttribute("statistics", view.getBundleText(ITextsPaths.STATISTICS_HREF));
-        try {
-            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
-        } catch(NullPointerException exc) {
-
-        }
+        configurator.basicConfiguration(model, authentication, view);
         exhibitionService.cancelExhibitionById(Integer.parseInt(request.getParameterNames().nextElement()));
         model.addAttribute("isSuccessful", view.getBundleText(ITextsPaths.CANCEL_EXHIBITION));
         return "cancelExhibitionResult";
@@ -139,22 +82,7 @@ public class PageController {
 
     @PostMapping("/plan")
     public String planExhibition(HttpServletRequest request, Model model, Authentication authentication) {
-        model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
-        model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
-        try {
-            model.addAttribute("isAuthorized", authentication.isAuthenticated());
-        } catch(NullPointerException exc) {
-            model.addAttribute("isAuthorized", false);
-        }
-        model.addAttribute("addExhibition", view.getBundleText(ITextsPaths.ADD_EXHIBITION_HREF));
-        model.addAttribute("statistics", view.getBundleText(ITextsPaths.STATISTICS_HREF));
-        try {
-            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
-        } catch(NullPointerException exc) {
-
-        }
+        configurator.basicConfiguration(model, authentication, view);
         exhibitionService.planExhibitionById(Integer.parseInt(request.getParameterNames().nextElement()));
         model.addAttribute("isSuccessful", view.getBundleText(ITextsPaths.PLAN_EXHIBITION));
         return "planExhibitionResult";
@@ -162,36 +90,12 @@ public class PageController {
 
     @PostMapping("/")
     public String filterByDate(HttpServletRequest request, Model model, Authentication authentication) {
-        model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
-        model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
-        try {
-            model.addAttribute("isAuthorized", authentication.isAuthenticated());
-        } catch(NullPointerException exc) {
-            model.addAttribute("isAuthorized", false);
-        }
-        model.addAttribute("addExhibition", view.getBundleText(ITextsPaths.ADD_EXHIBITION_HREF));
-        model.addAttribute("statistics", view.getBundleText(ITextsPaths.STATISTICS_HREF));
+        configurator.basicConfiguration(model, authentication, view);
+
         model.addAttribute("filterByDate", view.getBundleText(ITextsPaths.FILTER_BY_DATE));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
-        try {
-            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
-        } catch(NullPointerException exc) {
 
-        }
-        model.addAttribute("topic", view.getBundleText(ITextsPaths.TOPIC));
-        model.addAttribute("startDate", view.getBundleText(ITextsPaths.START_DATE));
-        model.addAttribute("endDate", view.getBundleText(ITextsPaths.END_DATE));
-        model.addAttribute("startTime", view.getBundleText(ITextsPaths.START_TIME));
-        model.addAttribute("endTime", view.getBundleText(ITextsPaths.END_TIME));
-        model.addAttribute("price", view.getBundleText(ITextsPaths.PRICE));
-        model.addAttribute("rooms", view.getBundleText(ITextsPaths.ROOMS));
-        model.addAttribute("state", view.getBundleText(ITextsPaths.STATE));
-        model.addAttribute("buyTicket", view.getBundleText(ITextsPaths.BUY_A_TICKET));
-        model.addAttribute("buy", view.getBundleText(ITextsPaths.BUY));
-        model.addAttribute("cancel", view.getBundleText(ITextsPaths.CANCEL));
-        model.addAttribute("plan", view.getBundleText(ITextsPaths.PLAN));
+        configurator.configureExhibitionTable(model, view);
         try {
             LocalDate filterDate = LocalDate.of(Integer.parseInt(request.getParameter("filterDate").substring(ISubstringIndexesForDatesAndTimes.YEAR_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.YEAR_END_INDEX)), Integer.parseInt(request.getParameter("filterDate").substring(ISubstringIndexesForDatesAndTimes.MONTH_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.MONTH_END_INDEX)), Integer.parseInt(request.getParameter("filterDate").substring(ISubstringIndexesForDatesAndTimes.DAY_BEGIN_INDEX)));
             model.addAttribute("listExhibitions", exhibitionService.allExhibitions().stream().filter(element ->
@@ -201,9 +105,7 @@ public class PageController {
                             && filterDate.isBefore(element.getEndDate())) )).collect(Collectors.toList()));
         } catch (StringIndexOutOfBoundsException exc) {
             model.addAttribute("notGivenFilter", "Filter argument was not given!");
-
         }
-
 
         return "home";
     }
@@ -227,49 +129,18 @@ public class PageController {
 
     @GetMapping("/registration")
     public String registration(Model model, Authentication authentication) {
-        model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
-        model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
-        try {
-            model.addAttribute("isAuthorized", authentication.isAuthenticated());
-        } catch(NullPointerException exc) {
-            model.addAttribute("isAuthorized", false);
-        }
-        model.addAttribute("addExhibition", view.getBundleText(ITextsPaths.ADD_EXHIBITION_HREF));
-        model.addAttribute("statistics", view.getBundleText(ITextsPaths.STATISTICS_HREF));
+        configurator.basicConfiguration(model, authentication, view);
         model.addAttribute("filterByDate", view.getBundleText(ITextsPaths.FILTER_BY_DATE));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
         model.addAttribute("email", view.getBundleText(ITextsPaths.EMAIL));
         model.addAttribute("username", view.getBundleText(ITextsPaths.USERNAME));
-        model.addAttribute("password", view.getBundleText(ITextsPaths.PASSWORD));
-        try {
-            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
-        } catch(NullPointerException exc) {
-
-        }
-
         model.addAttribute("password", view.getBundleText(ITextsPaths.PASSWORD));
         return "registration";
     }
 
     @GetMapping("/addExhibition")
     public String addExhibition(Model model, Authentication authentication) {
-        model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
-        model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
-        try {
-            model.addAttribute("isAuthorized", authentication.isAuthenticated());
-        } catch(NullPointerException exc) {
-            model.addAttribute("isAuthorized", false);
-        }
-        model.addAttribute("statistics", view.getBundleText(ITextsPaths.STATISTICS_HREF));
-        try {
-            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
-        } catch(NullPointerException exc) {
-
-        }
+        configurator.basicConfiguration(model, authentication, view);
         model.addAttribute("inputTopic", view.getBundleText(ITextsPaths.EXHIBITION_ADDING_TOPIC));
         model.addAttribute("inputStartDate", view.getBundleText(ITextsPaths.EXHIBITION_ADDING_START_DATE));
         model.addAttribute("inputEndDate", view.getBundleText(ITextsPaths.EXHIBITION_ADDING_END_DATE));
@@ -283,23 +154,8 @@ public class PageController {
 
     @GetMapping("/statistics")
     public String statistics(Model model, Authentication authentication) {
-        model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
-        model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
-        try {
-            model.addAttribute("isAuthorized", authentication.isAuthenticated());
-        } catch(NullPointerException exc) {
-            model.addAttribute("isAuthorized", false);
-        }
-        model.addAttribute("addExhibition", view.getBundleText(ITextsPaths.ADD_EXHIBITION_HREF));
-
+        configurator.basicConfiguration(model, authentication, view);
         model.addAttribute("statistics", exhibitionService.statistics());
-        try {
-            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
-        } catch(NullPointerException exc) {
-
-        }
         model.addAttribute("topic", view.getBundleText(ITextsPaths.TOPIC));
         model.addAttribute("startDate", view.getBundleText(ITextsPaths.START_DATE));
         model.addAttribute("endDate", view.getBundleText(ITextsPaths.END_DATE));
