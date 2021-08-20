@@ -19,6 +19,12 @@
     <a href="/login">${login}</a>
 </header>
 
+<form:form action="/" method="post">
+    <label>Filter by date</label>
+    <input type="date" name="filterDate">
+    <input type="submit" name="filterSubmit" value="Submit">
+</form:form>
+<p>${notGivenFilter}</p>
 
 <table border="2">
     <tr>

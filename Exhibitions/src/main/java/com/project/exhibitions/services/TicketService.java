@@ -14,4 +14,8 @@ public class TicketService {
     public Ticket saveNewTicket(Ticket ticket) {
         return ticketRepository.save(ticket);
     }
+
+    public long countByExhibitionId(Integer exhibitionId) {
+        return ticketRepository.findAll().stream().filter(element -> element.getExhibitionId() == exhibitionId).count();
+    }
 }

@@ -1,6 +1,8 @@
 package com.project.exhibitions.controller;
 
+import com.project.exhibitions.containers.ISubstringIndexesForDatesAndTimes;
 import com.project.exhibitions.dto.TicketDTO;
+import com.project.exhibitions.entity.Exhibition;
 import com.project.exhibitions.entity.Role;
 import com.project.exhibitions.entity.Ticket;
 import com.project.exhibitions.services.ExhibitionService;
@@ -19,8 +21,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
@@ -95,6 +100,42 @@ public class PageController {
         return "planExhibitionResult";
     }
 
+    @PostMapping("/")
+    public String filterByDate(HttpServletRequest request, Model model, Authentication authentication) {
+        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_BUTTON));
+        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_BUTTON));
+        try {
+            model.addAttribute("isAdmin", authentication.getAuthorities().contains(Role.ADMIN));
+        } catch(NullPointerException exc) {
+
+        }
+        model.addAttribute("topic", view.getBundleText(ITextsPaths.TOPIC));
+        model.addAttribute("startDate", view.getBundleText(ITextsPaths.START_DATE));
+        model.addAttribute("endDate", view.getBundleText(ITextsPaths.END_DATE));
+        model.addAttribute("startTime", view.getBundleText(ITextsPaths.START_TIME));
+        model.addAttribute("endTime", view.getBundleText(ITextsPaths.END_TIME));
+        model.addAttribute("price", view.getBundleText(ITextsPaths.PRICE));
+        model.addAttribute("rooms", view.getBundleText(ITextsPaths.ROOMS));
+        model.addAttribute("state", view.getBundleText(ITextsPaths.STATE));
+        model.addAttribute("buyTicket", view.getBundleText(ITextsPaths.BUY_A_TICKET));
+        model.addAttribute("cancel", view.getBundleText(ITextsPaths.CANCEL));
+        model.addAttribute("plan", view.getBundleText(ITextsPaths.PLAN));
+        try {
+            LocalDate filterDate = LocalDate.of(Integer.parseInt(request.getParameter("filterDate").substring(ISubstringIndexesForDatesAndTimes.YEAR_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.YEAR_END_INDEX)), Integer.parseInt(request.getParameter("filterDate").substring(ISubstringIndexesForDatesAndTimes.MONTH_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.MONTH_END_INDEX)), Integer.parseInt(request.getParameter("filterDate").substring(ISubstringIndexesForDatesAndTimes.DAY_BEGIN_INDEX)));
+            model.addAttribute("listExhibitions", exhibitionService.allExhibitions().stream().filter(element ->
+                    (filterDate.isEqual(element.getStartDate())
+                            || filterDate.isEqual(element.getEndDate())
+                            || (filterDate.isAfter(element.getStartDate())
+                            && filterDate.isBefore(element.getEndDate())) )).collect(Collectors.toList()));
+        } catch (StringIndexOutOfBoundsException exc) {
+            model.addAttribute("notGivenFilter", "Filter argument was not given!");
+
+        }
+
+
+        return "home";
+    }
+
     @GetMapping("/home")
     public void home(Model model, Authentication authentication) {
         main(model, authentication);
@@ -120,6 +161,21 @@ public class PageController {
     @GetMapping("/addExhibition")
     public String addExhibition() {
         return "addExhibition";
+    }
+
+    @GetMapping("/statistics")
+    public String statistics(Model model) {
+        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_BUTTON));
+        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_BUTTON));
+        model.addAttribute("statistics", exhibitionService.statistics());
+
+        model.addAttribute("topic", view.getBundleText(ITextsPaths.TOPIC));
+        model.addAttribute("startDate", view.getBundleText(ITextsPaths.START_DATE));
+        model.addAttribute("endDate", view.getBundleText(ITextsPaths.END_DATE));
+        model.addAttribute("price", view.getBundleText(ITextsPaths.PRICE));
+        model.addAttribute("state", view.getBundleText(ITextsPaths.STATE));
+        model.addAttribute("visitors", view.getBundleText(ITextsPaths.VISITORS));
+        return "statistics";
     }
 
 }

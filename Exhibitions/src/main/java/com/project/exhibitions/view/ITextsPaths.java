@@ -16,6 +16,8 @@ public interface ITextsPaths {
     String CANCEL = "home.table.cancel";
     String PLAN = "home.table.plan";
 
+    String VISITORS = "statistics.table.visitors";
+
     String EXHIBITION_ADDING_SUCCESS = "addition.exhibition.success";
     String EXHIBITION_ADDING_ERROR = "addition.exhibition.error";
 }

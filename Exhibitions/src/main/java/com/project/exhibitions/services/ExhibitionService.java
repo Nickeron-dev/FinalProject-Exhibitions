@@ -1,11 +1,14 @@
 package com.project.exhibitions.services;
 
+import com.project.exhibitions.dto.ExhibitionWithVisitorsDTO;
 import com.project.exhibitions.entity.Exhibition;
 import com.project.exhibitions.repository.ExhibitionRepository;
+import com.project.exhibitions.repository.TicketRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +17,7 @@ import java.util.Optional;
 @Service
 public class ExhibitionService {
     private ExhibitionRepository exhibitionRepository;
+    private TicketService ticketService;
 
     public List<Exhibition> allExhibitions() {
         return exhibitionRepository.findAll();
@@ -33,5 +37,22 @@ public class ExhibitionService {
 
     public void planExhibitionById(@Param("id") Integer id) {
         exhibitionRepository.planExhibitionById(id);
+    }
+
+    public List<ExhibitionWithVisitorsDTO> statistics() {
+        List<Exhibition> exhibitions = exhibitionRepository.findAll();
+        List<ExhibitionWithVisitorsDTO> statistics = new ArrayList<>(exhibitions.size());
+        exhibitions.stream().forEach(element -> {
+            statistics.add(ExhibitionWithVisitorsDTO.builder()
+                    .id(element.getId())
+                    .startDate(element.getStartDate())
+                    .endDate(element.getEndDate())
+                    .topic(element.getTopic())
+                    .state(element.getState())
+                    .price(element.getPrice())
+                    .visitors((int) ticketService.countByExhibitionId(element.getId()))
+                    .build());
+        });
+        return statistics;
     }
 }

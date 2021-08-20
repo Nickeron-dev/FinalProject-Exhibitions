@@ -12,7 +12,7 @@
 <form:form action="/registration" method="post">
     <input type="text" name="email" placeholder="Email...">
     <input type="text" name="username" placeholder="Username...">
-    <input type="text" name="password" placeholder="Password...">
+    <input type="password" name="password" placeholder="Password...">
     <input type="submit" value="Submit">
 </form:form>
 </body>
