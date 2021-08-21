@@ -23,9 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/statistics", "/addExhibition").access("hasAuthority('ADMIN')")
                 .antMatchers("/buy").access("hasAnyAuthority('USER', 'ADMIN')")
                 .and()
-                .formLogin().permitAll()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().logoutUrl("/logout").permitAll();
     }
 
     @Autowired

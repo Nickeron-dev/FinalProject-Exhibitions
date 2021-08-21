@@ -7,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 
 public class Configurator {
-    //private final View view = new View();
 
     public boolean basicConfiguration(Model model, Authentication authentication, View view) {
         model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
@@ -44,4 +43,5 @@ public class Configurator {
         model.addAttribute("plan", view.getBundleText(ITextsPaths.PLAN));
         return true;
     }
+
 }

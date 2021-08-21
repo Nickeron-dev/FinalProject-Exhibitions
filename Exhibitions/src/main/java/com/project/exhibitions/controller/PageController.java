@@ -130,7 +130,6 @@ public class PageController {
     @GetMapping("/registration")
     public String registration(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, view);
-        model.addAttribute("filterByDate", view.getBundleText(ITextsPaths.FILTER_BY_DATE));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
         model.addAttribute("email", view.getBundleText(ITextsPaths.EMAIL));
         model.addAttribute("username", view.getBundleText(ITextsPaths.USERNAME));
@@ -163,6 +162,23 @@ public class PageController {
         model.addAttribute("state", view.getBundleText(ITextsPaths.STATE));
         model.addAttribute("visitors", view.getBundleText(ITextsPaths.VISITORS));
         return "statistics";
+    }
+
+    @GetMapping("/login")
+    public String loginForm(Model model, Authentication authentication) {
+        configurator.basicConfiguration(model, authentication, view);
+        model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
+        model.addAttribute("email", view.getBundleText(ITextsPaths.EMAIL));
+        model.addAttribute("username", view.getBundleText(ITextsPaths.USERNAME));
+        model.addAttribute("password", view.getBundleText(ITextsPaths.PASSWORD));
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public RedirectView logout(HttpServletRequest request, Model model, Authentication authentication) {
+        authentication.setAuthenticated(false);
+        main(model, authentication);
+        return new RedirectView(request.getHeader("Referer").substring(21));
     }
 
 }
