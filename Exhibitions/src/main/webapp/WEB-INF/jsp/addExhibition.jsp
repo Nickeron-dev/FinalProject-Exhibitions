@@ -1,3 +1,4 @@
+<%@ page import="java.time.LocalDate" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
@@ -25,25 +26,27 @@
 </header>
 <form:form class="add-exhibition" action="/addExhibition" method="post">
     <label>${inputTopic}</label>
-    <input type="text" name="topic">
+    <input type="text" name="topic" required>
     <br>
+
     <label>${inputStartDate}</label>
-    <input type="date" name="startDate">
+    <input type="date" name="startDate" value="${now}" min="${now}" required>
+
     <br>
     <label>${inputEndDate}</label>
-    <input type="date" name="endDate">
+    <input type="date" name="endDate"value="${now}" min="${now}" required>
     <br>
     <label>${inputRoomsNumber}</label>
-    <input type="text" name="rooms">
+    <input type="text" name="rooms" required>
     <br>
     <label>${inputStartTime}</label>
-    <input type="time" name="startTime">
+    <input type="time" name="startTime" required>
     <br>
     <label>${inputEndTime}</label>
-    <input type="time" name="endTime">
+    <input type="time" name="endTime" required>
     <br>
     <label>${inputPrice}</label>
-    <input type="text" name="price">
+    <input type="text" name="price" required>
     <br>
     <input type="submit" value="${submit}">
 </form:form>

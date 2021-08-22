@@ -31,7 +31,7 @@
 
 <form:form action="/" method="post">
     <label>${filterByDate}</label>
-    <input type="date" name="filterDate">
+    <input type="date" name="filterDate" value="${now}" required>
     <input type="submit" name="filterSubmit" value="${submit}">
 </form:form>
 <p>${notGivenFilter}</p>

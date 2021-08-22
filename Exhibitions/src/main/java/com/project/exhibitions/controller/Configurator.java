@@ -10,8 +10,8 @@ public class Configurator {
 
     public boolean basicConfiguration(Model model, Authentication authentication, View view) {
         model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
+        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER));
+        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN));
         model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
         try {
             model.addAttribute("isAuthorized", authentication.isAuthenticated());

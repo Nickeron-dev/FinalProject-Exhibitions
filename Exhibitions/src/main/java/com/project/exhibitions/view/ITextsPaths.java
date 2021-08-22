@@ -2,8 +2,8 @@ package com.project.exhibitions.view;
 
 public interface ITextsPaths {
     String HOME = "title.href.home";
-    String REGISTER_HREF = "title.href.register";
-    String LOGIN_HREF = "title.href.login";
+    String REGISTER = "title.register";
+    String LOGIN = "title.login";
     String LOGOUT_HREF = "title.href.logout";
     String STATISTICS_HREF = "title.href.statistics";
     String ADD_EXHIBITION_HREF = "title.href.add.exhibition";
@@ -46,4 +46,7 @@ public interface ITextsPaths {
 
     String BUY_TICKET_SUCCESS = "buy.ticket.success";
     String BUY_TICKET_ERROR = "buy.ticket.error";
+
+    String ERROR_PAGE_MESSAGE = "error.page.message";
+
 }

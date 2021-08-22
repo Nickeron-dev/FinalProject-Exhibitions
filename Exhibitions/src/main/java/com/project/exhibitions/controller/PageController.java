@@ -44,6 +44,7 @@ public class PageController {
     @GetMapping("/")
     public String main(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, view);
+        model.addAttribute("now", LocalDate.now().toString());
         model.addAttribute("filterByDate", view.getBundleText(ITextsPaths.FILTER_BY_DATE));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
         model.addAttribute("listExhibitions", exhibitionService.allExhibitions());
@@ -130,6 +131,7 @@ public class PageController {
     @GetMapping("/registration")
     public String registration(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, view);
+        model.addAttribute("registration", view.getBundleText(ITextsPaths.REGISTER));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
         model.addAttribute("email", view.getBundleText(ITextsPaths.EMAIL));
         model.addAttribute("username", view.getBundleText(ITextsPaths.USERNAME));
@@ -140,6 +142,7 @@ public class PageController {
     @GetMapping("/addExhibition")
     public String addExhibition(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, view);
+        model.addAttribute("now", LocalDate.now().toString());
         model.addAttribute("inputTopic", view.getBundleText(ITextsPaths.EXHIBITION_ADDING_TOPIC));
         model.addAttribute("inputStartDate", view.getBundleText(ITextsPaths.EXHIBITION_ADDING_START_DATE));
         model.addAttribute("inputEndDate", view.getBundleText(ITextsPaths.EXHIBITION_ADDING_END_DATE));
@@ -167,6 +170,7 @@ public class PageController {
     @GetMapping("/login")
     public String loginForm(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, view);
+        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
         model.addAttribute("email", view.getBundleText(ITextsPaths.EMAIL));
         model.addAttribute("username", view.getBundleText(ITextsPaths.USERNAME));
@@ -179,6 +183,13 @@ public class PageController {
         authentication.setAuthenticated(false);
         main(model, authentication);
         return new RedirectView(request.getHeader("Referer").substring(21));
+    }
+
+    @GetMapping("/error")
+    public String logout(Model model, Authentication authentication) {
+        configurator.basicConfiguration(model, authentication, view);
+        model.addAttribute("errorMessage", view.getBundleText(ITextsPaths.ERROR_PAGE_MESSAGE));
+        return "error";
     }
 
 }

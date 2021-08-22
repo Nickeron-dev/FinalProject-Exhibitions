@@ -28,12 +28,13 @@
         <a href="/addExhibition">${addExhibition}</a>
     </c:if>
 </header>
+<h1>${registration}</h1>
 <form:form class="registration" action="/registration" method="post">
-    <input type="text" name="email" placeholder="${email}">
+    <input type="text" name="email" placeholder="${email}" required>
     <br>
-    <input type="text" name="username" placeholder="${username}">
+    <input type="text" name="username" placeholder="${username}" required>
     <br>
-    <input type="password" name="password" placeholder="${password}">
+    <input type="password" name="password" placeholder="${password}" required>
     <br>
     <input type="submit" value="${submit}">
 </form:form>

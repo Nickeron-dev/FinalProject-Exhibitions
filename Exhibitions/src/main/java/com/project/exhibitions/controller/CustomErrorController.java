@@ -18,8 +18,8 @@ public class CustomErrorController implements ErrorController {
     @ResponseBody
     public String handleError(Model model, Authentication authentication) {
         model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
-        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER_HREF));
-        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN_HREF));
+        model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER));
+        model.addAttribute("login", view.getBundleText(ITextsPaths.LOGIN));
         model.addAttribute("logout", view.getBundleText(ITextsPaths.LOGOUT_HREF));
         try {
             model.addAttribute("isAuthorized", authentication.isAuthenticated());
