@@ -10,6 +10,7 @@ import com.project.exhibitions.view.ILocaleNames;
 import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
+@Slf4j
 @Controller
 public class PageController {
 
@@ -48,7 +50,7 @@ public class PageController {
         model.addAttribute("filterByDate", view.getBundleText(ITextsPaths.FILTER_BY_DATE));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
         model.addAttribute("listExhibitions", exhibitionService.allExhibitions());
-
+        log.info("List of all exhibitions was given");
         configurator.configureExhibitionTable(model, view);
         return "home";
     }
@@ -66,9 +68,11 @@ public class PageController {
                     .exhibitionTopic(exhibitionService.findById(ticket.getExhibitionId()).orElseThrow(IllegalArgumentException::new).getTopic())
                     .exhibitionId(ticket.getExhibitionId())
                     .build());
+            log.info("New Ticket was saved");
             model.addAttribute("isSuccessful", view.getBundleText(ITextsPaths.BUY_TICKET_SUCCESS));
         } catch(IllegalArgumentException exc) {
             model.addAttribute("isSuccessful", view.getBundleText(ITextsPaths.BUY_TICKET_ERROR));
+            log.error("Error in saving new Ticket");
         }
         return "buyTicketResult";
     }
@@ -77,6 +81,7 @@ public class PageController {
     public String cancelExhibition(HttpServletRequest request, Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, view);
         exhibitionService.cancelExhibitionById(Integer.parseInt(request.getParameterNames().nextElement()));
+        log.info("Exhibition with id: " + request.getParameterNames().nextElement() + " was cancelled");
         model.addAttribute("isSuccessful", view.getBundleText(ITextsPaths.CANCEL_EXHIBITION));
         return "cancelExhibitionResult";
     }
@@ -85,6 +90,7 @@ public class PageController {
     public String planExhibition(HttpServletRequest request, Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, view);
         exhibitionService.planExhibitionById(Integer.parseInt(request.getParameterNames().nextElement()));
+        log.info("Exhibition with id: " + request.getParameterNames().nextElement() + " was planned");
         model.addAttribute("isSuccessful", view.getBundleText(ITextsPaths.PLAN_EXHIBITION));
         return "planExhibitionResult";
     }
@@ -104,8 +110,10 @@ public class PageController {
                             || filterDate.isEqual(element.getEndDate())
                             || (filterDate.isAfter(element.getStartDate())
                             && filterDate.isBefore(element.getEndDate())) )).collect(Collectors.toList()));
+            log.info("Exhibitions that cover date: " + filterDate + " were shown");
         } catch (StringIndexOutOfBoundsException exc) {
             model.addAttribute("notGivenFilter", "Filter argument was not given!");
+            log.warn("Error showing exhibition with id: " + request.getParameterNames().nextElement());
         }
 
         return "home";
@@ -118,13 +126,13 @@ public class PageController {
 
     @PostMapping(value="/change-language", params="ukr")
     public RedirectView ukr() {
-        view.changeLocale(Optional.of(new Locale(ILocaleNames.UKR_LANGUAGE, ILocaleNames.UKR_COUNTRY)));
+        log.info("Language bundle was changed to: " + ILocaleNames.UKR_LANGUAGE, view.changeLocale(Optional.of(new Locale(ILocaleNames.UKR_LANGUAGE, ILocaleNames.UKR_COUNTRY))));
         return new RedirectView("/");
     }
 
     @PostMapping(value="/change-language", params="eng")
     public RedirectView eng() {
-        view.changeLocale(Optional.of(new Locale(ILocaleNames.DEFAULT_LANGUAGE)));
+        log.info("Language bundle was changed to: " + ILocaleNames.DEFAULT_LANGUAGE, view.changeLocale(Optional.of(new Locale(ILocaleNames.DEFAULT_LANGUAGE))));
         return new RedirectView("/");
     }
 
@@ -158,6 +166,7 @@ public class PageController {
     public String statistics(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, view);
         model.addAttribute("statistics", exhibitionService.statistics());
+        log.info("List with statistics was given");
         model.addAttribute("topic", view.getBundleText(ITextsPaths.TOPIC));
         model.addAttribute("startDate", view.getBundleText(ITextsPaths.START_DATE));
         model.addAttribute("endDate", view.getBundleText(ITextsPaths.END_DATE));
@@ -181,13 +190,15 @@ public class PageController {
     @GetMapping("/logout")
     public RedirectView logout(HttpServletRequest request, Model model, Authentication authentication) {
         authentication.setAuthenticated(false);
+        log.info("User logged out.");
         main(model, authentication);
         return new RedirectView(request.getHeader("Referer").substring(21));
     }
 
     @GetMapping("/error")
-    public String logout(Model model, Authentication authentication) {
+    public String error(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, view);
+        log.warn("Error page was shown");
         model.addAttribute("errorMessage", view.getBundleText(ITextsPaths.ERROR_PAGE_MESSAGE));
         return "error";
     }

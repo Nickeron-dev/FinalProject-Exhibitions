@@ -4,6 +4,7 @@ import com.project.exhibitions.dto.UserDTO;
 import com.project.exhibitions.services.UserService;
 import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @AllArgsConstructor
 
+@Slf4j
 @RestController
 @RequestMapping("/")
 public class RegistrationFormController {
@@ -33,9 +35,11 @@ public class RegistrationFormController {
 
         try {
             userService.saveNewUser(newUser);
+            log.info("New user was saved");
             model.addAttribute("usedEmail", "You've successfully registered!");
         } catch (DataIntegrityViolationException exc) {
             model.addAttribute("usedEmail", "Your email is already used! Use another one.");
+            log.info("Error saving new user");
         }
         return new ModelAndView("registrationResult");
     }

@@ -7,6 +7,7 @@ import com.project.exhibitions.services.ExhibitionService;
 import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import java.time.LocalTime;
 
 @AllArgsConstructor
 
+@Slf4j
 @RestController
 @RequestMapping("/")
 public class ExhibitionsManagingController {
@@ -42,9 +44,11 @@ public class ExhibitionsManagingController {
                     .price(Integer.parseInt(request.getParameter("price")))
                     .state(ExhibitionState.PLANNED)
                     .build());
+            log.info("New exhibition was saved");
             model.addAttribute("result", View.view.getBundleText(ITextsPaths.EXHIBITION_ADDING_SUCCESS));
         } catch (Exception exc) {
             model.addAttribute("result", View.view.getBundleText(ITextsPaths.EXHIBITION_ADDING_ERROR));
+            log.info("Error saving new exhibition");
         }
         return new ModelAndView("addExhibitionResult");
     }
