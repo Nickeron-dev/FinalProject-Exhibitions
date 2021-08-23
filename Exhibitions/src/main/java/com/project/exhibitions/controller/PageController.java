@@ -49,18 +49,10 @@ public class PageController {
     @GetMapping("/")
     public String main(Model model, Authentication authentication, Pageable pageable) {
         configurator.basicConfiguration(model, authentication, view);
-        Page<Exhibition> pages = exhibitionService.allByPages(pageable.withPage(configurator.getCurrentPage()));
+        Page<Exhibition> pages = (Page<Exhibition>) exhibitionService.findStartingStartDate(LocalDate.now(), pageable.withPage(configurator.getCurrentPage()));
         double sizeOfOnePageInElements = 4.0;
-        model.addAttribute("pagesNumber", Math.ceil(exhibitionService.allExhibitions().stream()
-                .filter(
-                        element -> element.getEndDate().isAfter(LocalDate.now())
-                                || element.getEndDate().isEqual(LocalDate.now()))
-                .count() / sizeOfOnePageInElements));
-        model.addAttribute("content", pages.getContent().stream()
-                .filter(
-                        element -> element.getEndDate().isAfter(LocalDate.now())
-                                || element.getEndDate().isEqual(LocalDate.now()))
-                .collect(Collectors.toList()));
+        model.addAttribute("pagesNumber", pages.getTotalPages());
+        model.addAttribute("content", pages.getContent());
         model.addAttribute("noElementsFound", view.getBundleText(ITextsPaths.NO_ELEMENTS_FOUND));
 
         model.addAttribute("now", LocalDate.now().toString());
@@ -215,7 +207,7 @@ public class PageController {
         authentication.setAuthenticated(false);
         log.info("User logged out.");
         main(model, authentication, pageable);
-        return new RedirectView(request.getHeader("Referer").substring(21));
+        return new RedirectView("/");
     }
 
     @GetMapping("/error")

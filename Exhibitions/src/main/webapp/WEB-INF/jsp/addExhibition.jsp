@@ -30,11 +30,11 @@
     <br>
 
     <label>${inputStartDate}</label>
-    <input type="date" name="startDate" value="${now}" min="${now}" required>
+    <input type="date" name="startDate" min="${now}" required>
 
     <br>
     <label>${inputEndDate}</label>
-    <input type="date" name="endDate"value="${now}" min="${now}" required>
+    <input type="date" name="endDate" min="${now}" required>
     <br>
     <label>${inputRoomsNumber}</label>
     <input type="text" name="rooms" required>

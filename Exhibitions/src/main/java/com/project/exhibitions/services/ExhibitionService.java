@@ -2,13 +2,14 @@ package com.project.exhibitions.services;
 
 import com.project.exhibitions.dto.ExhibitionWithVisitorsDTO;
 import com.project.exhibitions.entity.Exhibition;
-import com.project.exhibitions.repository.ExhibitionRepository;
+import com.project.exhibitions.repository.ExhibitionRepositoryImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,23 +18,23 @@ import java.util.Optional;
 
 @Service
 public class ExhibitionService {
-    private ExhibitionRepository exhibitionRepository;
+    private ExhibitionRepositoryImpl exhibitionRepository;
     private TicketService ticketService;
 
     public List<Exhibition> allExhibitions() {
         return exhibitionRepository.findAll();
     }
 
-    public Page<Exhibition> allByPages(Pageable pageable) {
-        return exhibitionRepository.findAll(pageable);
-    }
-
-    public void saveNewExhibition(Exhibition exhibition) {
-        exhibitionRepository.save(exhibition);
+    public Exhibition saveNewExhibition(Exhibition exhibition) {
+        return exhibitionRepository.save(exhibition);
     }
 
     public Optional<Exhibition> findById(Integer id) {
         return exhibitionRepository.findById(id);
+    }
+
+    public Page<Exhibition> findStartingStartDate(LocalDate date, Pageable pageable) {
+        return exhibitionRepository.findAllByStartDateAfter(date, pageable);
     }
 
     public void cancelExhibitionById(@Param("id") Integer id) {
