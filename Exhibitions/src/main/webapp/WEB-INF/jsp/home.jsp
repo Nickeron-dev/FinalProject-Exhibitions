@@ -38,7 +38,6 @@
 
 <table border="2">
     <tr>
-        <th>ID</th>
         <th>${topic}</th>
         <th>${startDate}</th>
         <th>${endDate}</th>
@@ -58,7 +57,6 @@
     </tr>
     <c:forEach var="item" items="${listExhibitions}">
         <tr>
-            <td>${item.id}</td>
             <td>${item.topic}</td>
             <td>${item.startDate}</td>
             <td>${item.endDate}</td>

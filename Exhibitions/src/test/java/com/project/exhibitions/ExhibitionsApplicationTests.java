@@ -10,11 +10,16 @@ import com.project.exhibitions.services.UserService;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 class ExhibitionsApplicationTests {
@@ -32,12 +37,12 @@ class ExhibitionsApplicationTests {
     @Test
     public void loadAndSaveUserTest() {
         userService.saveNewUser(UserDTO.builder()
-                .email("valeria@gmail.com")
-                .username("Valeria")
+                .email("anton@gmail.com")
+                .username("Anton")
                 .password("pass")
                 .build());
-        Assert.notNull(userService.findById(28), "User not found");
-        Assert.notNull(userService.loadUserByUsername("Valeria"), "User by username was not found");
+        Assert.notNull(userService.findById(31), "User not found");
+        Assert.notNull(userService.loadUserByUsername("Anton"), "User by username was not found");
     }
 
     @Ignore
