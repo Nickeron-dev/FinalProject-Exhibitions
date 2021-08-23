@@ -40,3 +40,9 @@ table {
 .plan {
     background: yellow;
 }
+
+.pages {
+    overflow: visible;
+    width: auto;
+    text-decoration: underline;
+}

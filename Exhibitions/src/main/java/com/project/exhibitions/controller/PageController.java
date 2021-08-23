@@ -49,31 +49,32 @@ public class PageController {
     @GetMapping("/")
     public String main(Model model, Authentication authentication, Pageable pageable) {
         configurator.basicConfiguration(model, authentication, view);
-        Page<Exhibition> pages = exhibitionService.allByPages(pageable);
-        System.out.println(pages.getTotalPages());
-        System.out.println(pageable.next().getPageNumber());
-        System.out.println(pageable.withPage(2).toString());
-        model.addAttribute("pagesNumber", pages.getTotalPages());
-        model.addAttribute("content", pages.getContent());
+        Page<Exhibition> pages = exhibitionService.allByPages(pageable.withPage(configurator.getCurrentPage()));
+        double sizeOfOnePageInElements = 4.0;
+        model.addAttribute("pagesNumber", Math.ceil(exhibitionService.allExhibitions().stream()
+                .filter(
+                        element -> element.getEndDate().isAfter(LocalDate.now())
+                                || element.getEndDate().isEqual(LocalDate.now()))
+                .count() / sizeOfOnePageInElements));
+        model.addAttribute("content", pages.getContent().stream()
+                .filter(
+                        element -> element.getEndDate().isAfter(LocalDate.now())
+                                || element.getEndDate().isEqual(LocalDate.now()))
+                .collect(Collectors.toList()));
+        model.addAttribute("noElementsFound", view.getBundleText(ITextsPaths.NO_ELEMENTS_FOUND));
 
         model.addAttribute("now", LocalDate.now().toString());
         model.addAttribute("filterByDate", view.getBundleText(ITextsPaths.FILTER_BY_DATE));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
-        model.addAttribute("listExhibitions", exhibitionService.allExhibitions());
         log.info("List of all exhibitions was given");
         configurator.configureExhibitionTable(model, view);
         return "home";
     }
 
-    @PostMapping(value = "/", params = "nextPage")
-    public RedirectView nextPage() {
-        currentPage += 1;
-        return new RedirectView("/");
-    }
-
-    @PostMapping(value = "/", params = "previousPage")
-    public RedirectView nextPage() {
-        currentPage -= 1;
+    @PostMapping(value = "/", params = "id")
+    public RedirectView changePage(HttpServletRequest request) {
+        log.info("Page was changed");
+        configurator.setCurrentPage(Integer.parseInt(request.getParameter("id")) - 1);
         return new RedirectView("/");
     }
 
@@ -127,7 +128,7 @@ public class PageController {
         configurator.configureExhibitionTable(model, view);
         try {
             LocalDate filterDate = LocalDate.of(Integer.parseInt(request.getParameter("filterDate").substring(ISubstringIndexesForDatesAndTimes.YEAR_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.YEAR_END_INDEX)), Integer.parseInt(request.getParameter("filterDate").substring(ISubstringIndexesForDatesAndTimes.MONTH_BEGIN_INDEX, ISubstringIndexesForDatesAndTimes.MONTH_END_INDEX)), Integer.parseInt(request.getParameter("filterDate").substring(ISubstringIndexesForDatesAndTimes.DAY_BEGIN_INDEX)));
-            model.addAttribute("listExhibitions", exhibitionService.allExhibitions().stream().filter(element ->
+            model.addAttribute("content", exhibitionService.allExhibitions().stream().filter(element ->
                     (filterDate.isEqual(element.getStartDate())
                             || filterDate.isEqual(element.getEndDate())
                             || (filterDate.isAfter(element.getStartDate())

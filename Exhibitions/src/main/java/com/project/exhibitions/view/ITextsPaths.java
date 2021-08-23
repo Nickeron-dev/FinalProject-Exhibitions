@@ -49,4 +49,5 @@ public interface ITextsPaths {
 
     String ERROR_PAGE_MESSAGE = "error.page.message";
 
+    String NO_ELEMENTS_FOUND = "error.no.elements.found";
 }

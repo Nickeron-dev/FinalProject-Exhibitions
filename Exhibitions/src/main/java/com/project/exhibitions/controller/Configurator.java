@@ -8,6 +8,16 @@ import org.springframework.ui.Model;
 
 public class Configurator {
 
+    private Integer currentPage = 0;
+
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
+
     public boolean basicConfiguration(Model model, Authentication authentication, View view) {
         model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
         model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER));
