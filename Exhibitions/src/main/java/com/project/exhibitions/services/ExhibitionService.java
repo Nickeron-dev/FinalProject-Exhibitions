@@ -3,8 +3,9 @@ package com.project.exhibitions.services;
 import com.project.exhibitions.dto.ExhibitionWithVisitorsDTO;
 import com.project.exhibitions.entity.Exhibition;
 import com.project.exhibitions.repository.ExhibitionRepository;
-import com.project.exhibitions.repository.TicketRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,10 @@ public class ExhibitionService {
 
     public List<Exhibition> allExhibitions() {
         return exhibitionRepository.findAll();
+    }
+
+    public Page<Exhibition> allByPages(Pageable pageable) {
+        return exhibitionRepository.findAll(pageable);
     }
 
     public void saveNewExhibition(Exhibition exhibition) {

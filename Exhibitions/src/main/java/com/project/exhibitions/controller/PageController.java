@@ -2,6 +2,7 @@ package com.project.exhibitions.controller;
 
 import com.project.exhibitions.containers.ISubstringIndexesForDatesAndTimes;
 import com.project.exhibitions.dto.TicketDTO;
+import com.project.exhibitions.entity.Exhibition;
 import com.project.exhibitions.entity.Ticket;
 import com.project.exhibitions.services.ExhibitionService;
 import com.project.exhibitions.services.TicketService;
@@ -12,6 +13,8 @@ import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,8 +47,15 @@ public class PageController {
     private final Configurator configurator = new Configurator();
 
     @GetMapping("/")
-    public String main(Model model, Authentication authentication) {
+    public String main(Model model, Authentication authentication, Pageable pageable) {
         configurator.basicConfiguration(model, authentication, view);
+        Page<Exhibition> pages = exhibitionService.allByPages(pageable);
+        System.out.println(pages.getTotalPages());
+        System.out.println(pageable.next().getPageNumber());
+        System.out.println(pageable.withPage(2).toString());
+        model.addAttribute("pagesNumber", pages.getTotalPages());
+        model.addAttribute("content", pages.getContent());
+
         model.addAttribute("now", LocalDate.now().toString());
         model.addAttribute("filterByDate", view.getBundleText(ITextsPaths.FILTER_BY_DATE));
         model.addAttribute("submit", view.getBundleText(ITextsPaths.SUBMIT));
@@ -53,6 +63,18 @@ public class PageController {
         log.info("List of all exhibitions was given");
         configurator.configureExhibitionTable(model, view);
         return "home";
+    }
+
+    @PostMapping(value = "/", params = "nextPage")
+    public RedirectView nextPage() {
+        currentPage += 1;
+        return new RedirectView("/");
+    }
+
+    @PostMapping(value = "/", params = "previousPage")
+    public RedirectView nextPage() {
+        currentPage -= 1;
+        return new RedirectView("/");
     }
 
     @PostMapping(value = "/buy")
@@ -120,8 +142,8 @@ public class PageController {
     }
 
     @GetMapping("/home")
-    public void home(Model model, Authentication authentication) {
-        main(model, authentication);
+    public void home(Model model, Authentication authentication, Pageable pageable) {
+        main(model, authentication, pageable);
     }
 
     @PostMapping(value="/change-language", params="ukr")
@@ -188,10 +210,10 @@ public class PageController {
     }
 
     @GetMapping("/logout")
-    public RedirectView logout(HttpServletRequest request, Model model, Authentication authentication) {
+    public RedirectView logout(HttpServletRequest request, Model model, Authentication authentication, Pageable pageable) {
         authentication.setAuthenticated(false);
         log.info("User logged out.");
-        main(model, authentication);
+        main(model, authentication, pageable);
         return new RedirectView(request.getHeader("Referer").substring(21));
     }
 
