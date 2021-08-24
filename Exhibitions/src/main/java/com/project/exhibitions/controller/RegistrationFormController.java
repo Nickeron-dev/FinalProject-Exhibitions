@@ -39,23 +39,8 @@ public class RegistrationFormController {
             if ( ! (Pattern.compile(View.view.getBundleText(ITextsPaths.EMAIL_REGEX)).matcher(newUser.getEmail()).matches()
             && Pattern.compile(View.view.getBundleText(ITextsPaths.USERNAME_REGEX)).matcher(newUser.getUsername()).matches()
             && Pattern.compile(View.view.getBundleText(ITextsPaths.PASSWORD_REGEX)).matcher(newUser.getPassword()).matches())) {
-                System.out.println(Pattern.compile(View.view.getBundleText(ITextsPaths.EMAIL_REGEX)).matcher(newUser.getEmail()).matches());
-                System.out.println(Pattern.compile(View.view.getBundleText(ITextsPaths.USERNAME_REGEX)).matcher(newUser.getUsername()).matches());
-                System.out.println(Pattern.compile(View.view.getBundleText(ITextsPaths.PASSWORD_REGEX)).matcher(newUser.getPassword()).matches());
-                System.out.println(ITextsPaths.EMAIL_REGEX);
-                System.out.println(View.view.getBundleText(ITextsPaths.USERNAME_REGEX));
-                System.out.println(ITextsPaths.PASSWORD_REGEX);
-                System.out.println(Pattern.compile(ITextsPaths.EMAIL_REGEX).matcher(newUser.getEmail()).matches());
-                System.out.println(Pattern.compile(ITextsPaths.USERNAME_REGEX).matcher(newUser.getUsername()).matches());
-                System.out.println(Pattern.compile(ITextsPaths.PASSWORD_REGEX).matcher(newUser.getPassword()).matches());
                 throw new IllegalArgumentException("Given data is invalid");
             }
-            System.out.println(ITextsPaths.EMAIL_REGEX);
-            System.out.println(ITextsPaths.USERNAME_REGEX);
-            System.out.println(ITextsPaths.PASSWORD_REGEX);
-            System.out.println(Pattern.compile(ITextsPaths.EMAIL_REGEX).matcher(newUser.getEmail()).matches());
-            System.out.println(Pattern.compile(ITextsPaths.USERNAME_REGEX).matcher(newUser.getUsername()).matches());
-            System.out.println(Pattern.compile(ITextsPaths.PASSWORD_REGEX).matcher(newUser.getPassword()).matches());
             userService.saveNewUser(newUser);
             log.info("New user was saved");
             model.addAttribute("invalid", "You've successfully registered!");
