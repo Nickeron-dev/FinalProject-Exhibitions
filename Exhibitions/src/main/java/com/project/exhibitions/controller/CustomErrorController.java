@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CustomErrorController implements ErrorController {
-    private final View view = new View();
 
     @RequestMapping("/error")
     @ResponseBody
     public String handleError(Model model, Authentication authentication) {
         Configurator configurator = new Configurator();
-        configurator.basicConfiguration(model, authentication, view);
+        configurator.basicConfiguration(model, authentication, View.view);
         return "error";
     }
 }

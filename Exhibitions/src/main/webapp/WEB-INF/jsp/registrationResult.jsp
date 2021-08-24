@@ -28,6 +28,6 @@
         <a href="/addExhibition">${addExhibition}</a>
     </c:if>
 </header>
-<h1>${usedEmail}</h1>
+<h1>${invalid}</h1>
 </body>
 </html>

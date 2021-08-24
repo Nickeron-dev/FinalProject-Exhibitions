@@ -38,6 +38,8 @@ public interface ITextsPaths {
 
     String VISITORS = "statistics.table.visitors";
 
+    String INVALID_DATA = "addition.exhibition.error";
+
     String EXHIBITION_ADDING_SUCCESS = "addition.exhibition.success";
     String EXHIBITION_ADDING_ERROR = "addition.exhibition.error";
 
@@ -50,4 +52,8 @@ public interface ITextsPaths {
     String ERROR_PAGE_MESSAGE = "error.page.message";
 
     String NO_ELEMENTS_FOUND = "error.no.elements.found";
+
+    String USERNAME_REGEX = "username.regex";
+    String EMAIL_REGEX = "email.regex";
+    String PASSWORD_REGEX = "password.regex";
 }

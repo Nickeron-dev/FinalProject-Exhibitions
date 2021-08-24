@@ -28,11 +28,11 @@ import java.time.LocalTime;
 public class ExhibitionsManagingController {
 
     private final ExhibitionService exhibitionService;
-    private final View view = new View();
+
     @PostMapping("/addExhibition")
     public ModelAndView addExhibition(HttpServletRequest request, Model model, Authentication authentication) {
         Configurator config = new Configurator();
-        config.basicConfiguration(model, authentication, view);
+        config.basicConfiguration(model, authentication, View.view);
 
         try {
             LocalDate startDate = LocalDate.of(Integer.parseInt(request.getParameter("startDate")

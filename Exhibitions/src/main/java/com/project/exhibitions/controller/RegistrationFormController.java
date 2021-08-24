@@ -2,6 +2,7 @@ package com.project.exhibitions.controller;
 
 import com.project.exhibitions.dto.UserDTO;
 import com.project.exhibitions.services.UserService;
+import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.regex.Pattern;
 
 @AllArgsConstructor
 
@@ -23,22 +25,45 @@ import javax.servlet.http.HttpServletRequest;
 public class RegistrationFormController {
 
     private final UserService userService;
-    private final View view = new View();
+    //private final View view = new View();
 
     @PostMapping("/registration")
     public ModelAndView processRegistration(HttpServletRequest request, Model model, Authentication authentication) {
         Configurator config = new Configurator();
-        config.basicConfiguration(model, authentication, view);
+        config.basicConfiguration(model, authentication, View.view);
 
         UserDTO newUser = new UserDTO(request.getParameter("email"),
                 request.getParameter("username"), request.getParameter("password"));
 
         try {
+            if ( ! (Pattern.compile(View.view.getBundleText(ITextsPaths.EMAIL_REGEX)).matcher(newUser.getEmail()).matches()
+            && Pattern.compile(View.view.getBundleText(ITextsPaths.USERNAME_REGEX)).matcher(newUser.getUsername()).matches()
+            && Pattern.compile(View.view.getBundleText(ITextsPaths.PASSWORD_REGEX)).matcher(newUser.getPassword()).matches())) {
+                System.out.println(Pattern.compile(View.view.getBundleText(ITextsPaths.EMAIL_REGEX)).matcher(newUser.getEmail()).matches());
+                System.out.println(Pattern.compile(View.view.getBundleText(ITextsPaths.USERNAME_REGEX)).matcher(newUser.getUsername()).matches());
+                System.out.println(Pattern.compile(View.view.getBundleText(ITextsPaths.PASSWORD_REGEX)).matcher(newUser.getPassword()).matches());
+                System.out.println(ITextsPaths.EMAIL_REGEX);
+                System.out.println(View.view.getBundleText(ITextsPaths.USERNAME_REGEX));
+                System.out.println(ITextsPaths.PASSWORD_REGEX);
+                System.out.println(Pattern.compile(ITextsPaths.EMAIL_REGEX).matcher(newUser.getEmail()).matches());
+                System.out.println(Pattern.compile(ITextsPaths.USERNAME_REGEX).matcher(newUser.getUsername()).matches());
+                System.out.println(Pattern.compile(ITextsPaths.PASSWORD_REGEX).matcher(newUser.getPassword()).matches());
+                throw new IllegalArgumentException("Given data is invalid");
+            }
+            System.out.println(ITextsPaths.EMAIL_REGEX);
+            System.out.println(ITextsPaths.USERNAME_REGEX);
+            System.out.println(ITextsPaths.PASSWORD_REGEX);
+            System.out.println(Pattern.compile(ITextsPaths.EMAIL_REGEX).matcher(newUser.getEmail()).matches());
+            System.out.println(Pattern.compile(ITextsPaths.USERNAME_REGEX).matcher(newUser.getUsername()).matches());
+            System.out.println(Pattern.compile(ITextsPaths.PASSWORD_REGEX).matcher(newUser.getPassword()).matches());
             userService.saveNewUser(newUser);
             log.info("New user was saved");
-            model.addAttribute("usedEmail", "You've successfully registered!");
+            model.addAttribute("invalid", "You've successfully registered!");
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("invalid", View.view.getBundleText(ITextsPaths.INVALID_DATA));
+            log.info("Error saving new user");
         } catch (DataIntegrityViolationException exc) {
-            model.addAttribute("usedEmail", "Your email is already used! Use another one.");
+            model.addAttribute("invalid", "Your email is already used! Use another one.");
             log.info("Error saving new user");
         }
         return new ModelAndView("registrationResult");
