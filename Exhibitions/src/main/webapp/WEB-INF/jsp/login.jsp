@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta content="text/html">
-    <title>Welcome</title>
+    <title>Login</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css" type="text/css">
 </head>
 <body>

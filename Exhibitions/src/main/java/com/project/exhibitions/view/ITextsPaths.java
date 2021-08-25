@@ -56,4 +56,5 @@ public interface ITextsPaths {
     String USERNAME_REGEX = "username.regex";
     String EMAIL_REGEX = "email.regex";
     String PASSWORD_REGEX = "password.regex";
+    String REGISTER_SUCCESS = "register.success";
 }

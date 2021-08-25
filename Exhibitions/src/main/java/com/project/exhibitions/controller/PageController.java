@@ -12,7 +12,6 @@ import com.project.exhibitions.view.ITextsPaths;
 import com.project.exhibitions.view.View;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -33,24 +32,18 @@ import java.util.stream.Collectors;
 @Slf4j
 @Controller
 public class PageController {
-
-    @Autowired
     private final UserService userService;
 
-    @Autowired
     private final ExhibitionService exhibitionService;
 
-    @Autowired
     private final TicketService ticketService;
 
-    //private final View view = new View();
     private final Configurator configurator = new Configurator();
 
     @GetMapping("/")
     public String main(Model model, Authentication authentication, Pageable pageable) {
         configurator.basicConfiguration(model, authentication, View.view);
-        Page<Exhibition> pages = (Page<Exhibition>) exhibitionService.findStartingStartDate(LocalDate.now(), pageable.withPage(configurator.getCurrentPage()));
-        double sizeOfOnePageInElements = 4.0;
+        Page<Exhibition> pages = exhibitionService.findStartingStartDate(LocalDate.now(), pageable.withPage(configurator.getCurrentPage()));
         model.addAttribute("pagesNumber", pages.getTotalPages());
         model.addAttribute("content", pages.getContent());
         model.addAttribute("noElementsFound", View.view.getBundleText(ITextsPaths.NO_ELEMENTS_FOUND));
@@ -180,7 +173,7 @@ public class PageController {
     @GetMapping("/statistics")
     public String statistics(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);
-        model.addAttribute("statistics", exhibitionService.statistics());
+        model.addAttribute("statistics", exhibitionService.statistics(exhibitionService.allExhibitions()));
         log.info("List with statistics was given");
         model.addAttribute("topic", View.view.getBundleText(ITextsPaths.TOPIC));
         model.addAttribute("startDate", View.view.getBundleText(ITextsPaths.START_DATE));

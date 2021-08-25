@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta content="text/html">
-    <title>Welcome</title>
+    <title>Statistics</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/statistics.css" type="text/css">
 </head>
 <body>

@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta content="text/html">
-    <title>Welcome</title>
+    <title>Cancel exhibition</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css" type="text/css">
 </head>
 <body>

@@ -45,8 +45,7 @@ public class ExhibitionService {
         exhibitionRepository.planExhibitionById(id);
     }
 
-    public List<ExhibitionWithVisitorsDTO> statistics() {
-        List<Exhibition> exhibitions = exhibitionRepository.findAll();
+    public List<ExhibitionWithVisitorsDTO> statistics(List<Exhibition> exhibitions) {
         List<ExhibitionWithVisitorsDTO> statistics = new ArrayList<>(exhibitions.size());
         exhibitions.stream().forEach(element -> {
             statistics.add(ExhibitionWithVisitorsDTO.builder()

@@ -48,7 +48,7 @@ class ExhibitionsApplicationTests {
     @Ignore
     @Test
     public void exhibitionStatisticsTest() {
-        Assert.notNull(exhibitionService.statistics(), "Statistics not found");
+        Assert.notNull(exhibitionService.statistics(exhibitionService.allExhibitions()), "Statistics not found");
     }
 
     @Ignore

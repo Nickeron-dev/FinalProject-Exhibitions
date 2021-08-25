@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta content="text/html">
-    <title>Success</title>
+    <title>Add Exhibition</title>
     <link href="${pageContext.request.contextPath}/css/addexhibitionresult.css" rel="stylesheet" type="text/css">
 </head>
 <body>

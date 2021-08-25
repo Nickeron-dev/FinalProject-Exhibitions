@@ -43,7 +43,7 @@ public class RegistrationFormController {
             }
             userService.saveNewUser(newUser);
             log.info("New user was saved");
-            model.addAttribute("invalid", "You've successfully registered!");
+            model.addAttribute("invalid", View.view.getBundleText(ITextsPaths.REGISTER_SUCCESS));
         } catch (IllegalArgumentException e) {
             model.addAttribute("invalid", View.view.getBundleText(ITextsPaths.INVALID_DATA));
             log.info("Error saving new user");

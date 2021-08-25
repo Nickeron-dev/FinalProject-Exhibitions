@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta content="text/html">
-    <title>Success</title>
+    <title>Registration</title>
     <link href="${pageContext.request.contextPath}/css/registration.css" rel="stylesheet" type="text/css">
 </head>
 <body>
