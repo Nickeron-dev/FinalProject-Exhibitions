@@ -18,8 +18,8 @@ import java.util.Optional;
 
 @Service
 public class ExhibitionService {
-    private ExhibitionRepositoryImpl exhibitionRepository;
-    private TicketService ticketService;
+    private final ExhibitionRepositoryImpl exhibitionRepository;
+    private final TicketService ticketService;
 
     public List<Exhibition> allExhibitions() {
         return exhibitionRepository.findAll();
@@ -47,7 +47,7 @@ public class ExhibitionService {
 
     public List<ExhibitionWithVisitorsDTO> statistics(List<Exhibition> exhibitions) {
         List<ExhibitionWithVisitorsDTO> statistics = new ArrayList<>(exhibitions.size());
-        exhibitions.stream().forEach(element -> {
+        exhibitions.forEach(element -> {
             statistics.add(ExhibitionWithVisitorsDTO.builder()
                     .id(element.getId())
                     .startDate(element.getStartDate())

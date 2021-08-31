@@ -7,19 +7,19 @@ import com.project.exhibitions.entity.Ticket;
 import com.project.exhibitions.services.ExhibitionService;
 import com.project.exhibitions.services.TicketService;
 import com.project.exhibitions.services.UserService;
+import com.project.exhibitions.view.ILocaleNames;
+import com.project.exhibitions.view.ITextsPaths;
+import com.project.exhibitions.view.View;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.Locale;
+import java.util.Optional;
 
 @SpringBootTest
 class ExhibitionsApplicationTests {
@@ -37,12 +37,12 @@ class ExhibitionsApplicationTests {
     @Test
     public void loadAndSaveUserTest() {
         userService.saveNewUser(UserDTO.builder()
-                .email("anton@gmail.com")
-                .username("Anton")
+                .email("luke@gmail.com")
+                .username("Luke")
                 .password("pass")
                 .build());
-        Assert.notNull(userService.findById(31), "User not found");
-        Assert.notNull(userService.loadUserByUsername("Anton"), "User by username was not found");
+        Assert.notNull(userService.findById(56), "User not found");
+        Assert.notNull(userService.loadUserByUsername("Luke"), "User by username was not found");
     }
 
     @Ignore
@@ -104,6 +104,13 @@ class ExhibitionsApplicationTests {
     @Test
     public void countExhibitionsTickets() {
         Assert.isTrue(2 == ticketService.countByExhibitionId(8), "Found amount was not equal to given");
+    }
+
+    @Ignore
+    @Test
+    public void viewChangeLocaleTest() {
+        View.view.changeLocale(Optional.of(new Locale(ILocaleNames.UKR_LANGUAGE, ILocaleNames.UKR_COUNTRY)));
+        Assert.isTrue(View.view.getBundleText(ITextsPaths.SUBMIT).equals("Ввести"), "Could not change locale.");
     }
 
 }

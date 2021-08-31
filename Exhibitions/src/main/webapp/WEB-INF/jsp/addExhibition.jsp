@@ -24,6 +24,7 @@
         <a href="/statistics">${statistics}</a>
     </c:if>
 </header>
+<div class="form">
 <form:form class="add-exhibition" action="/addExhibition" method="post">
     <label>${inputTopic}</label>
     <input type="text" name="topic" required>
@@ -50,5 +51,6 @@
     <br>
     <input type="submit" value="${submit}">
 </form:form>
+</div>
 </body>
 </html>

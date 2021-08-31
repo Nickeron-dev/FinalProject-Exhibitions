@@ -3,7 +3,7 @@ package com.project.exhibitions.entity;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority {
-    GUEST, USER, ADMIN;
+    USER, ADMIN;
 
     @Override
     public String getAuthority() {

@@ -33,14 +33,10 @@ form {
     margin-bottom: 10px;
 }
 
-.cancel {
-    background: red;
+.form {
+    margin-right: auto;
+    margin-left: auto;
+    width: 200px;
+    height: 500px;
 }
 
-.buy {
-    background: green;
-}
-
-.plan {
-    background: yellow;
-}
