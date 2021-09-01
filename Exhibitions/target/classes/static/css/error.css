@@ -1,0 +1,40 @@
+body {
+    text-align: center;
+}
+
+header {
+    padding-bottom: 3em;
+    background: yellow;
+}
+
+a {
+    float: left;
+    padding: 15px;
+    color: black;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+a:hover {
+    background: darkkhaki;
+}
+
+header input {
+    float: right;
+}
+
+h1 {
+    margin-top: 0.5em;
+}
+
+.cancel {
+    background: red;
+}
+
+.buy {
+    background: green;
+}
+
+.plan {
+    background: yellow;
+}
