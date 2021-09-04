@@ -17,6 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
+/**
+ * @author Illia Koshkin
+ */
 @AllArgsConstructor
 
 @Slf4j
@@ -25,8 +28,14 @@ import java.util.regex.Pattern;
 public class RegistrationFormController {
 
     private final UserService userService;
-    //private final View view = new View();
 
+    /**
+     * Processing registration method
+     * @param request This object is used to get inputted parameter
+     * @param model To add attribute to show text
+     * @param authentication To get user's role
+     * @return ModelAndView(redirect) to result of the operation
+     */
     @PostMapping("/registration")
     public ModelAndView processRegistration(HttpServletRequest request, Model model, Authentication authentication) {
         Configurator config = new Configurator();

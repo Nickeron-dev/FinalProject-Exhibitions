@@ -27,6 +27,9 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * @author Illia Koshkin
+ */
 @AllArgsConstructor
 
 @Slf4j
@@ -40,6 +43,13 @@ public class PageController {
 
     private final Configurator configurator = new Configurator();
 
+    /**
+     * This method shows main home page
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @param pageable To get current page of exhibitions
+     * @return filled home page
+     */
     @GetMapping("/")
     public String main(Model model, Authentication authentication, Pageable pageable) {
         configurator.basicConfiguration(model, authentication, View.view);
@@ -56,6 +66,11 @@ public class PageController {
         return "home";
     }
 
+    /**
+     * This method changes page
+     * @param request To get which page was pressed
+     * @return Redirects to home page
+     */
     @PostMapping(value = "/", params = "id")
     public RedirectView changePage(HttpServletRequest request) {
         log.info("Page was changed");
@@ -63,6 +78,13 @@ public class PageController {
         return new RedirectView("/");
     }
 
+    /**
+     * This method processes buying operation
+     * @param request to get which user pressed the button
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return Buying result page
+     */
     @PostMapping(value = "/buy")
     public String buyTicket(HttpServletRequest request, Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);
@@ -85,6 +107,13 @@ public class PageController {
         return "buyTicketResult";
     }
 
+    /**
+     * This method cancels an Exhibition
+     * @param request To get Exhibition id
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return Cancel result page
+     */
     @PostMapping("/cancel")
     public String cancelExhibition(HttpServletRequest request, Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);
@@ -94,6 +123,13 @@ public class PageController {
         return "cancelExhibitionResult";
     }
 
+    /**
+     * This method plans an Exhibition
+     * @param request To get Exhibition id
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return Plan result page
+     */
     @PostMapping("/plan")
     public String planExhibition(HttpServletRequest request, Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);
@@ -103,6 +139,13 @@ public class PageController {
         return "planExhibitionResult";
     }
 
+    /**
+     * This method filters exhibitions by date
+     * @param request To get inputted date
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return Filtered exhibitions
+     */
     @PostMapping("/")
     public String filterByDate(HttpServletRequest request, Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);
@@ -127,23 +170,43 @@ public class PageController {
         return "home";
     }
 
+    /**
+     * This method opens home page but with another url(for better user experience)
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @param pageable To get current page of exhibitions
+     */
     @GetMapping("/home")
     public void home(Model model, Authentication authentication, Pageable pageable) {
         main(model, authentication, pageable);
     }
 
+    /**
+     * This method changes language to Ukrainian of all texts
+     * @return Redirect to main home page
+     */
     @PostMapping(value="/change-language", params="ukr")
     public RedirectView ukr() {
         log.info("Language bundle was changed to: " + ILocaleNames.UKR_LANGUAGE, View.view.changeLocale(Optional.of(new Locale(ILocaleNames.UKR_LANGUAGE, ILocaleNames.UKR_COUNTRY))));
         return new RedirectView("/");
     }
 
+    /**
+     * This method changes language to English of all texts
+     * @return Redirect to main home page
+     */
     @PostMapping(value="/change-language", params="eng")
     public RedirectView eng() {
         log.info("Language bundle was changed to: " + ILocaleNames.DEFAULT_LANGUAGE, View.view.changeLocale(Optional.of(new Locale(ILocaleNames.DEFAULT_LANGUAGE))));
         return new RedirectView("/");
     }
 
+    /**
+     * This method shows registration page
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return String registration page
+     */
     @GetMapping("/registration")
     public String registration(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);
@@ -155,6 +218,12 @@ public class PageController {
         return "registration";
     }
 
+    /**
+     * This method shows addExhibition page
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return String addExhibition page
+     */
     @GetMapping("/addExhibition")
     public String addExhibition(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);
@@ -170,6 +239,12 @@ public class PageController {
         return "addExhibition";
     }
 
+    /**
+     * This method shows statistics of visiting exhibitions
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return String statistics page
+     */
     @GetMapping("/statistics")
     public String statistics(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);
@@ -184,6 +259,12 @@ public class PageController {
         return "statistics";
     }
 
+    /**
+     * This method fills login form
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return String login page
+     */
     @GetMapping("/login")
     public String loginForm(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);
@@ -195,14 +276,27 @@ public class PageController {
         return "login";
     }
 
+    /**
+     * This method performs logging out
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @param pageable To get current page
+     * @return Redirect to home page
+     */
     @GetMapping("/logout")
-    public RedirectView logout(HttpServletRequest request, Model model, Authentication authentication, Pageable pageable) {
+    public RedirectView logout(Model model, Authentication authentication, Pageable pageable) {
         authentication.setAuthenticated(false);
         log.info("User logged out.");
         main(model, authentication, pageable);
         return new RedirectView("/");
     }
 
+    /**
+     * This method shows error page
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return String error page
+     */
     @GetMapping("/error")
     public String error(Model model, Authentication authentication) {
         configurator.basicConfiguration(model, authentication, View.view);

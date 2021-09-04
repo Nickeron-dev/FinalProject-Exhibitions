@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Illia Koshkin
+ */
 @AllArgsConstructor
 
 @Slf4j
@@ -20,11 +23,16 @@ public class LoginFormController {
 
     private final UserService userService;
 
+    /**
+     * This method logs user in
+     * @param user DTO object of a user
+     * @return Login page with result
+     * @throws UsernameNotFoundException In case if user was not found in the database
+     */
     @PostMapping("/login")
     @ResponseBody
     public String loginUser(UserDTO user) throws UsernameNotFoundException {
         userService.loadUserByUsername(user.getUsername());
-        System.out.println("Hello");
         log.info("User logged in");
         return "login";
     }

@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * @author Illia Koshkin
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

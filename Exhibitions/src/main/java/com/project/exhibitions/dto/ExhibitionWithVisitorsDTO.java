@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+/**
+ * @author Illia Koshkin
+ */
 @Getter
 @Setter
 @Builder

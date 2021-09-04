@@ -2,6 +2,9 @@ package com.project.exhibitions.dto;
 
 import lombok.*;
 
+/**
+ * @author Illia Koshkin
+ */
 @Getter
 @Setter
 @AllArgsConstructor

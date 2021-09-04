@@ -1,5 +1,8 @@
 package com.project.exhibitions.view;
 
+/**
+ * @author Illia Koshkin
+ */
 public interface ITextsPaths {
     String HOME = "title.href.home";
     String REGISTER = "title.register";

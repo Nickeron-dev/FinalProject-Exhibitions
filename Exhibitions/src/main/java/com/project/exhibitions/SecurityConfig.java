@@ -11,10 +11,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * @author Illia Koshkin
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
+
+    /**
+     * Configurator of path permissions
+     * @param http Object that will be configured
+     * @throws Exception In case of invalid configuration
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -31,11 +39,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+    /**
+     * Global configuration method
+     * @param builder that receives proper service
+     * @throws Exception in case of invalid service
+     */
     @Autowired
     public void globalConfig(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(userService);
     }
 
+    /**
+     * Sets password encoder
+     * @return PasswordEncoder object
+     */
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();

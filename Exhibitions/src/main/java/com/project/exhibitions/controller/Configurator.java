@@ -6,6 +6,9 @@ import com.project.exhibitions.view.View;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 
+/**
+ * @author Illia Koshkin
+ */
 public class Configurator {
 
     private Integer currentPage = 0;
@@ -18,6 +21,13 @@ public class Configurator {
         this.currentPage = currentPage;
     }
 
+    /**
+     * This method adds all required attributes to Model to fill header with all allowed references
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @param view to get localized text from bundle
+     * @return The result of the operation
+     */
     public boolean basicConfiguration(Model model, Authentication authentication, View view) {
         model.addAttribute("home", view.getBundleText(ITextsPaths.HOME));
         model.addAttribute("register", view.getBundleText(ITextsPaths.REGISTER));
@@ -38,6 +48,12 @@ public class Configurator {
         return true;
     }
 
+    /**
+     * This method adds all required column names to exhibition table
+     * @param model Target where attributes will be set
+     * @param view Source of the localized texts
+     * @return result of the operation
+     */
     public boolean configureExhibitionTable(Model model, View view) {
         model.addAttribute("topic", view.getBundleText(ITextsPaths.TOPIC));
         model.addAttribute("startDate", view.getBundleText(ITextsPaths.START_DATE));

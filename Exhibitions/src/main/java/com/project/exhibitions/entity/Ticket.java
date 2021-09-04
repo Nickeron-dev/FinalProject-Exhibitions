@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * @author Illia Koshkin
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

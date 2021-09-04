@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * @author Illia Koshkin
+ */
 @AllArgsConstructor
 
 @Slf4j
@@ -28,6 +31,13 @@ public class ExhibitionsManagingController {
 
     private final ExhibitionService exhibitionService;
 
+    /**
+     * This method performs addition of an exhibition
+     * @param request To get inputted data
+     * @param model It is a target where to put attributes
+     * @param authentication To check the role of the user
+     * @return ModelAndView(redirect) to result page
+     */
     @PostMapping("/addExhibition")
     public ModelAndView addExhibition(HttpServletRequest request, Model model, Authentication authentication) {
         Configurator config = new Configurator();
