@@ -1,0 +1,8 @@
+com.project.exhibitions
+com.project.exhibitions.containers
+com.project.exhibitions.controller
+com.project.exhibitions.dto
+com.project.exhibitions.entity
+com.project.exhibitions.repository
+com.project.exhibitions.services
+com.project.exhibitions.view
